@@ -1,9 +1,11 @@
 import { defineComponent } from 'vue';
-export const Third = defineComponent({
+import logo from '../../assets/icons/clock.svg'
+
+export const Second = defineComponent({
   setup: (props, context) => {
     return () => (
       <div>
-        third
+        <img src={logo}/>
       </div>
     )
   }

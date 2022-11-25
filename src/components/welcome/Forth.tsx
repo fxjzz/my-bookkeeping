@@ -1,9 +1,10 @@
 import { defineComponent } from 'vue';
-export const First = defineComponent({
+import logo from '../../assets/icons/cloud.svg'
+export const Forth = defineComponent({
   setup: (props, context) => {
     return () => (
       <div>
-        First
+        <img src={logo}/>
       </div>
     )
   }

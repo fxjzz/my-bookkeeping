@@ -1,0 +1,35 @@
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    >.card{
+        background: var(--welcome-card-bg);
+        border-radius: 8px;
+        padding: 16px;
+        margin:16px 16px 0;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        flex-grow: 1;
+        text-align: center;
+        font-size: 20px;
+        >h2{
+            margin-top: 36px;
+        }
+    }
+    >.actions{
+        font-size: 30px;
+        padding:24px 0;
+        color:var(--welcome-text);
+        display: flex;
+        margin: 0 16px;
+        align-items: center;
+        justify-content: space-between;
+        >.fake{visibility: hidden;}
+    }
+
+}
+.icon{
+    width: 168px;
+}

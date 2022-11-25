@@ -2,16 +2,20 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
+    background-image:linear-gradient(to bottom, #6236c1 0%, #8b4ad5 100%); ;
     >header{
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding-top: 66px;
+        color: #d4d4ee;
     }
     >main{
         flex-grow: 1;
+        display: flex;
     }
-    >footer{
-        flex-shrink: 0;
-    }
+}
+.icon{
+    width: 78px;
 }
