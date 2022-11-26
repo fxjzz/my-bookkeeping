@@ -19,11 +19,17 @@
         }
     }
     >.actions{
+        height: var(--welcome-nav-height);
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        z-index: var(--z-index-bottom-nav);
+        background: var(--welcome-bg-end);
+        width: 100%;
         font-size: 30px;
-        padding:24px 0;
+        padding:0 16px;
         color:var(--welcome-text);
         display: flex;
-        margin: 0 16px;
         align-items: center;
         justify-content: space-between;
         >.fake{visibility: hidden;}
