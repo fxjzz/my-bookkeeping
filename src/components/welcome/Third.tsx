@@ -1,11 +1,21 @@
 import { defineComponent } from 'vue';
-import logo from '../../assets/icons/statistics.svg'
+import s from './First.module.scss'
+import logo from '../../assets/icons/chart.svg'
+import { RouterLink} from 'vue-router';
 
 export const Third = defineComponent({
   setup: (props, context) => {
     return () => (
-      <div>
-        <img src={logo}/>
+      <div class={s.wrapper}>
+        <div class={s.card}>
+          <img class={s.icon} src={logo}/>
+          <h2>数据可视化<br/>数据一目了然</h2>
+        </div>
+        <div class={s.actions}>
+          <div class={s.fake}>跳过</div>
+          <RouterLink to="/welcome/4">下一页</RouterLink>
+          <RouterLink class={s.next} to="/start">跳过</RouterLink>
+        </div>
       </div>
     )
   }
