@@ -1,12 +1,9 @@
-import { defineComponent } from 'vue';
 import s from './WelcomeLayout.module.scss'
 import logo from '../../assets/icons/chart.svg'
 import { RouterLink} from 'vue-router';
 import { WelcomeLayout } from './WelcomeLayout';
 
-export const Third = defineComponent({
-  setup: (props, context) => {
-    return () => (
+export const Third = () => (
       <WelcomeLayout>
         {{
           icon:()=><img class={s.icon} src={logo}/>,
@@ -19,5 +16,4 @@ export const Third = defineComponent({
         }}
       </WelcomeLayout>
     )
-  }
-})
+Third.displayName='Third'
