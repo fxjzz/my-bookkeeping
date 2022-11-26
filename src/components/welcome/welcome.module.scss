@@ -1,0 +1,31 @@
+.card{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--welcome-card-bg);
+    border-radius: 8px;
+    padding: 16px; 
+    justify-content: center;   
+    align-items: center;   
+    text-align: center;
+    font-size: 20px;
+    >h2{
+        margin-top: 36px;
+    }
+}
+.actions{
+    height: var(--welcome-nav-height);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: var(--z-index-bottom-nav);
+    background: var(--welcome-bg-end);
+    width: 100%;
+    font-size: 30px;
+    padding:0 16px;
+    color:var(--welcome-text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    >.fake{visibility: hidden;}
+}
