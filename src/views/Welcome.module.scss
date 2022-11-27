@@ -10,6 +10,10 @@
         align-items: center;
         padding-top: 66px;
         color: #d4d4ee;
+        > svg {
+          width: 100px;
+          height: 88px;
+        }
     }
     >main{
         flex-grow: 1;
