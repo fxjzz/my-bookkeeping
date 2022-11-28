@@ -5,12 +5,11 @@ import s from './Welcome.module.scss'
 
 export const Welcome = defineComponent({
   setup: (props, context) => {
-    const main = ref<HTMLElement|null>(null)
-    const {direction,distance,swiping}=useSwipe(main)
-    watchEffect(()=>{
-      console.log(direction.value,distance.value,swiping.value);
-      
-    })
+    const main = ref<HTMLElement>()
+    // const {direction,distance,swiping}=useSwipe(main)
+    // watchEffect(()=>{
+    
+    // })
     return () => (<div class={s.wrapper}>
         <header>
         <svg>
