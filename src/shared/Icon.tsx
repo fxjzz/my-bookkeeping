@@ -6,7 +6,6 @@ export const Icon = defineComponent({
     name: {
       type: String,
     },
-
   },
   setup: (props, context) => {
     return () => (

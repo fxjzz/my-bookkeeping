@@ -14,7 +14,7 @@ export const StartPage = defineComponent({
           <Button class={s.button} onClick={onClick}>button</Button>
         </div>
         <div>
-          <FloatButton>123</FloatButton>
+          <FloatButton></FloatButton>
         </div>
       </div>
     );
