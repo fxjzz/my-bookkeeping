@@ -1,4 +1,4 @@
-import { defineComponent, ref, Transition } from "vue";
+import { computed, defineComponent, ref, Transition } from "vue";
 import { Button } from "../shared/Button";
 import { Center } from "../shared/Center";
 import { FloatButton } from "../shared/FloatButton";
@@ -16,8 +16,8 @@ export const StartPage = defineComponent({
     const onClickMenu = ()=>{
       overlayVisible.value = !overlayVisible.value
     }
-    return () => (
-      <div>
+    return () => <>
+      <div >
         <Navbar>
           {{
             title:()=>'山竹记账',
@@ -39,8 +39,7 @@ export const StartPage = defineComponent({
             leaveActiveClass={s.slide_fade_leave_active}>
          {overlayVisible.value && <Overlay onClose={() => overlayVisible.value = false}/> }
         </Transition>
-        
       </div>
-    );
+    </>
   },
 });
