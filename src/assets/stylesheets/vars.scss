@@ -4,11 +4,15 @@
     --welcome-bg-start:#6236c1;
     --welcome-bg-end:#8b4ad5;
     --welcome-nav-height:83px;
-    --z-index-bottom-nav:10;
+    --z-index-bottom-nav: 8; 
+    --z-index-overlay: 16;
     --welcome-nav-gap:8px;
     --button-bg:#5C33BE;
     --button-radius:6px;
     --button-height:48px;
     --navbar-bg-start:var(--welcome-bg-start);
     --navbar-bg-end:var(--welcome-bg-end);
+    --overlay-mask-bg: rgba(0, 0, 0, 0);
+    --overlay-bg: white;
+    --top-safe-area-height: 24px;
 }
