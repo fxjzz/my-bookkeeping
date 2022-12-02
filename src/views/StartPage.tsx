@@ -31,26 +31,24 @@ export const StartPage = defineComponent({
                 <Icon name="money" class={s.icon} />
               </Center>
               <div class={s.button_wrapper}>
-                <RouterLink to="/items">
+                <RouterLink to="/items/create">
                   <Button class={s.button} onClick={onClick}>
                     开始记账
                   </Button>
                 </RouterLink>
               </div>
-
               <RouterLink to="/items/create">
                 <FloatButton />
               </RouterLink>
-
               <Transition
                 enterFromClass={s.slide_fade_enter_from}
                 enterActiveClass={s.slide_fade_enter_active}
                 leaveToClass={s.slide_fade_leave_to}
                 leaveActiveClass={s.slide_fade_leave_active}
               >
-                {overlayVisible.value && (
+                {overlayVisible.value && 
                   <Overlay onClose={() => (overlayVisible.value = false)} />
-                )}
+                }
               </Transition>
             </>
           ),
