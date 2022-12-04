@@ -1,11 +1,12 @@
-.wrapper{
-    width: 100px;
-    height: 100px;
-    border: 1px solid red;
-}
 .navIcon{
     width: 30px;
     height: 30px;
     position: relative;
     top: 2px;
 }
+.inputPad_wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
