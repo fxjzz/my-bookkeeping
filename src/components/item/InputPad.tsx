@@ -12,8 +12,15 @@ export const InputPad = defineComponent({
   setup: (props, context) => {
     const refDate = ref<Date>();
     const now = new Date();
-    const refAmount=ref('')
-    const appendText = (n: number | string) => refAmount.value += n.toString()
+    const refAmount=ref('0')
+    const appendText = (n: number | string) => {
+      const nString = n.toString()
+      if(refAmount.value.length>=16) return
+      if(refAmount.value==='0'&&nString==='0') return
+      if(refAmount.value.indexOf('.')>=0&&nString==='.') return
+      if(refAmount.value==='0'&& nString!=='.')refAmount.value=nString; else refAmount.value +=nString
+      if(refAmount.value==='0') refAmount.value='0.'
+    }
     const buttons = [
         {text: '1', onClick: () => { appendText(1) }},
         { text: '2', onClick: () => { appendText(2) } },
@@ -26,7 +33,7 @@ export const InputPad = defineComponent({
         { text: '9', onClick: () => { appendText(9) } },
         { text: '.', onClick: () => { appendText('.') } },
         { text: '0', onClick: () => { appendText(0) } },
-        { text: '清空', onClick: () => { } },
+        { text: '清空', onClick: () => {refAmount.value='0'} },
         { text: '提交', onClick: () => { } },
       ]
     const refDatePickerVisible = ref(false);
