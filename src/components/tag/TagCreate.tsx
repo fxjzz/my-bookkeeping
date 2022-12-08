@@ -1,6 +1,7 @@
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, reactive, toRaw } from 'vue';
 import { MainLayout } from '../../layout/MainLayout';
 import { Button } from '../../shared/Button';
+import { EmojiSelect } from '../../shared/EmojiSelect';
 import { Icon } from '../../shared/Icon';
 import s from './TagCreate.module.scss';
 export const TagCreate = defineComponent({
@@ -10,17 +11,25 @@ export const TagCreate = defineComponent({
     }
   },
   setup: (props, context) => {
+    const formData = reactive({
+      name:'',
+      sign:''
+    })
+    const onSubmit = (e:Event)=>{
+      console.log(toRaw(formData));
+      e.preventDefault()
+    }
     return () => (
       <MainLayout>{{
         title: () => '新建标签',
         icon: () => <Icon name="larrow" class={s.icon} onClick={() => { }} />,
         default: () => (
-          <form class={s.form}>
+          <form class={s.form} onSubmit={onSubmit}>
             <div class={s.formRow}>
               <label class={s.formLabel}>
                 <span class={s.formItem_name}>标签名</span>
                 <div class={s.formItem_value}>
-                  <input class={[s.formItem, s.input, s.error]}></input>
+                  <input v-model={formData.name} class={[s.formItem, s.input, s.error]}></input>
                 </div>
                 <div class={s.formItem_errorHint}>
                   <span>必填</span>
@@ -29,160 +38,9 @@ export const TagCreate = defineComponent({
             </div>
             <div class={s.formRow}>
               <label class={s.formLabel}>
-                <span class={s.formItem_name}>符号</span>
+                <span class={s.formItem_name}>选中： {formData.sign}</span>
                 <div class={s.formItem_value}>
-                  <div class={[s.formItem, s.emojiList, s.error]}>
-                    <nav>
-                      <span class={s.selected}>表情</span>
-                      <span>手势</span>
-                      <span>职业</span>
-                      <span>衣服</span>
-                      <span>动物</span>
-                      <span>自然</span>
-                      <span>食物</span>
-                      <span>运动</span>
-                      <span>表情</span>
-                      <span>手势</span>
-                      <span>职业</span>
-                      <span>衣服</span>
-                      <span>动物</span>
-                      <span>自然</span>
-                      <span>食物</span>
-                      <span>运动</span>
-                    </nav>
-                    <ol>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                      <li>😀</li>
-                    </ol>
-                  </div>
+                  <EmojiSelect v-model={formData.sign} class={[s.formItem,s.emojiList,s.error]}/>
                 </div>
                 <div class={s.formItem_errorHint}>
                   <span>必填</span>
