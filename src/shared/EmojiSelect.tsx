@@ -8,7 +8,7 @@ export const EmojiSelect = defineComponent({
     }
   },
   setup: (props, context) => {
-    const refSelected = ref(2);
+    const refSelected = ref(0);
     const table: [string, string[]][] = [
       [
         "表情",
@@ -94,8 +94,7 @@ export const EmojiSelect = defineComponent({
               onClick={() => onClickEmoji(item)}>{item}</li>)
         )
     })
-    return () => 
-        <div class={s.emojiList}>
+    return () => <div class={s.emojiList}>
           <nav>
             {table.map((item, index) => (
               <span class={index === refSelected.value ? s.selected : ''} onClick={() => onClickTab(index)}>{item[0]}</span>
