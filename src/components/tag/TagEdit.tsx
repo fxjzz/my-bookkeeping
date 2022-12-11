@@ -34,7 +34,7 @@ export const TagEdit = defineComponent({
       <MainLayout>
         {{
           title:()=>'编辑标签',
-          icon:()=><Icon name='larrow' onClick={()=>{}}/>,
+          icon:()=><Icon name='larrow' class={s.icon} onClick={()=>{}}/>,
           default:()=><>
           <TagForm />
           <div class={s.actions}>
