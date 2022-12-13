@@ -1,4 +1,4 @@
-import { computed, defineComponent, PropType} from 'vue';
+import { computed, defineComponent, PropType, VNode } from 'vue';
 import { EmojiSelect } from './EmojiSelect';
 import s from './Form.module.scss';
 export const Form = defineComponent({
