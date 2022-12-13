@@ -19,7 +19,7 @@ export const StartPage = defineComponent({
       overlayVisible.value = !overlayVisible.value;
     };
     return () => (
-      <MainLayout>
+      <MainLayout class={s.wrapper}>
         {{
           title: () => "山竹记账",
           icon: () => (
