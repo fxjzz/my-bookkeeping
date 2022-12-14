@@ -1,6 +1,7 @@
 import { Overlay } from "vant";
 import { defineComponent, PropType, reactive, ref, watchEffect } from "vue";
 import { MainLayout } from "../../layout/MainLayout";
+import { Form, FormItem } from "../../shared/Form";
 import { Icon } from "../../shared/Icon";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { Time } from "../../shared/time";
@@ -11,8 +12,8 @@ export const ItemList = defineComponent({
     const refSelected = ref("本月");
     const time = new Time();
     const customTime = reactive({
-      start: new Time(),
-      end: new Time(),
+      start: new Time().format(),
+      end: new Time().format(),
     });
     const timeList = [
       {
@@ -34,6 +35,10 @@ export const ItemList = defineComponent({
       }
     })
     const refOverlayVisible = ref(false)
+    const onSubmitCustomTime = (e:Event)=>{
+      e.preventDefault()
+      refOverlayVisible.value=false
+    }
     return () => (
       <MainLayout>
         {{
@@ -61,8 +66,8 @@ export const ItemList = defineComponent({
               </Tab>
               <Tab name="自定义时间">
                 <ItemSummary
-                  startDate={customTime.start.format()}
-                  endDate={customTime.end.format()}
+                  startDate={customTime.start}
+                  endDate={customTime.end}
                 />
               </Tab>
             </Tabs>
@@ -72,14 +77,16 @@ export const ItemList = defineComponent({
                   请选择时间
                 </header>
                 <main>
-                  <form>
-                    <div>
-
-                    </div>
-                    <div>
-
-                    </div>
-                  </form>
+                  <Form onSubmit={onSubmitCustomTime}>
+                    <FormItem label="开始时间" v-model={customTime.start} type='date'/>
+                    <FormItem label="结束时间" v-model={customTime.end} type='date'/>
+                    <FormItem>
+                      <div class={s.actions}>
+                        <button type='button'>取消</button>
+                        <button type='submit'>确认</button>
+                      </div>
+                    </FormItem>
+                  </Form>
                 </main>
               </div>
             </Overlay>
