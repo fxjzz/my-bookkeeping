@@ -1,14 +1,19 @@
-import { Overlay } from "vant";
-import { defineComponent,  reactive, ref } from "vue";
+import { Overlay as VOverlay} from "vant";
+import { defineComponent,  reactive, ref, Transition } from "vue";
 import { MainLayout } from "../../layout/MainLayout";
 import { Form, FormItem } from "../../shared/Form";
 import { Icon } from "../../shared/Icon";
+import { Overlay } from "../../shared/Overlay";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { Time } from "../../shared/time";
 import s from "./ItemList.module.scss";
 import { ItemSummary } from "./ItemSummary";
 export const ItemList = defineComponent({
   setup: (props, context) => {
+    const overlayVisible = ref(false);
+    const onClickMenu = () => {
+      overlayVisible.value = !overlayVisible.value;
+    };
     const refSelected = ref("本月");
     const time = new Time();
     const customTime = reactive({
@@ -40,10 +45,10 @@ export const ItemList = defineComponent({
       }
     }
     return () => (
-      <MainLayout>
+      <MainLayout class={s.wrapper}>
         {{
           title: () => "山竹记账",
-          icon: () => <Icon name="menu" />,
+          icon: () => <Icon name="menu" class={s.icon} onClick={onClickMenu}/>,
           default: () => <>
             <Tabs v-model:selected={refSelected.value}
               onUpdate:selected={onSelect}>
@@ -72,7 +77,7 @@ export const ItemList = defineComponent({
                 />
               </Tab>
             </Tabs>
-            <Overlay show={refOverlayVisible.value} class={s.overlay}>
+            <VOverlay show={refOverlayVisible.value} class={s.overlay}>
               <div class={s.overlay_inner}>
                 <header>
                   请选择时间
@@ -90,7 +95,17 @@ export const ItemList = defineComponent({
                   </Form>
                 </main>
               </div>
-            </Overlay>
+            </VOverlay>
+            <Transition
+                enterFromClass={s.slide_fade_enter_from}
+                enterActiveClass={s.slide_fade_enter_active}
+                leaveToClass={s.slide_fade_leave_to}
+                leaveActiveClass={s.slide_fade_leave_active}
+              >
+                {overlayVisible.value && 
+                  <Overlay onClose={() => (overlayVisible.value = false)} />
+                }
+              </Transition>
           </>
         }}
       </MainLayout>
