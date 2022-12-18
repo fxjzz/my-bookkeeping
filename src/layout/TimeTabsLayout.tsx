@@ -63,7 +63,7 @@ export const TimeTabsLayout = defineComponent({
       }
     };
     return () => (
-      <MainLayout class={s.wrapper}>
+      <MainLayout>
         {{
           title: () => "山竹记账",
           icon: () => <Icon name="menu" class={s.icon} onClick={onClickMenu} />,
