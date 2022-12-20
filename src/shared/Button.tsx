@@ -10,6 +10,10 @@ export const Button = defineComponent({
       type: String as PropType<"important" | "normal" | "danger">,
       default: "important",
     },
+    type:{
+      type:String as PropType<'sumbit'|'button'>,
+      default:'button'
+    }
   },
   setup: (props, context) => {
     return () => <button onClick={props.onClick} class={[s.button,s[props.level]]}>{context.slots.default?.()}</button>;
