@@ -35,6 +35,7 @@ export const FormItem = defineComponent({
     error: {
       type: String,
     },
+    
     placeholder: String,
     options:Array as PropType<Array<{value:string,text:string}>>,
     onClick:Function as PropType<()=>void>
