@@ -40,7 +40,7 @@ export const FormItem = defineComponent({
       type: Number,
       default: 60,
     },
-    disabled:Boolean,
+    disabled: Boolean,
     placeholder: String,
     options: Array as PropType<Array<{ value: string; text: string }>>,
     onClick: Function as PropType<() => void>,
@@ -52,14 +52,14 @@ export const FormItem = defineComponent({
     const count = ref<number>(props.countFrom);
     const isCounting = computed(() => !!timer.value);
     const startCount = () =>
-      timer.value = setInterval(() => {
+      (timer.value = setInterval(() => {
         count.value -= 1;
         if (count.value === 0) {
           clearInterval(timer.value);
           timer.value = undefined;
           count.value = props.countFrom;
         }
-      }, 1000);
+      }, 1000));
     context.expose({ startCount });
     const content = computed(() => {
       switch (props.type) {
@@ -88,6 +88,10 @@ export const FormItem = defineComponent({
           return (
             <>
               <input
+                value={props.modelValue}
+                onInput={(e: any) =>
+                  context.emit("update:modelValue", e.target.value)
+                }
                 class={[s.formItem, s.input, s.validationCodeInput]}
                 placeholder={props.placeholder}
               />
@@ -152,7 +156,9 @@ export const FormItem = defineComponent({
             <div class={s.formItem_value}>{content.value}</div>
             {props.error && (
               <div class={s.formItem_errorHint}>
-                <span>{props.error ? getFriendlyError(props.error):'　'}</span>
+                <span>
+                  {props.error ? getFriendlyError(props.error) : "　"}
+                </span>
               </div>
             )}
           </label>
