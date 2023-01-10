@@ -17,15 +17,16 @@ import { TagCreate } from "../components/tag/TagCreate";
 import { TagEdit } from "../components/tag/TagEdit";
 import { SignInPage } from "../views/SignInPage";
 import { StatisticsPage } from "../views/StatisticsPage";
+import { http } from "../shared/Http";
 
 export const routes: RouteRecordRaw[] = [
   { path: "/", redirect: "/welcome" },
   {
     path: "/welcome",
     component: Welcome,
-    beforeEnter:(to,from,next)=>{
-      localStorage.getItem('skipFeatures') === 'yes' ? next('start') : next()
-   },
+    beforeEnter: (to, from, next) => {
+      localStorage.getItem("skipFeatures") === "yes" ? next("start") : next();
+    },
     children: [
       { path: "", redirect: "/welcome/1" },
       {
@@ -52,8 +53,13 @@ export const routes: RouteRecordRaw[] = [
   },
   { path: "/start", component: StartPage },
   {
-    path: "/items",
-    component: ItemPage,
+    path: "/items",component: ItemPage,
+    beforeEnter: async (to, from, next) => {
+      await http.get("/me").catch(() => {
+        next("/sign_in?return_to=" + to.path);
+      });
+      next();
+    },
     children: [
       { path: "", component: ItemList },
       { path: "create", component: ItemCreate },
