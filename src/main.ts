@@ -5,15 +5,17 @@ import { routes } from './config/routes'
 import { history } from './shared/history'
 import '@svgstore'
 import { http } from './shared/Http'
+import { fetchMe, mePromise } from './shared/me'
 
 const router = createRouter({history,routes, })
 
-const promise = http.get('/me')
+fetchMe()
+
 router.beforeEach(async (to,from)=>{
   if(to.path==='/' || to.path.startsWith('/welcome') || to.path.startsWith('/sign_in') || to.path.startsWith('/start')){
     return true
   } else {
-    const path = await promise.then(
+    const path = await mePromise!.then(
       ()=>true,
       ()=>'/sign_in?return_to=' + to.path
     )
