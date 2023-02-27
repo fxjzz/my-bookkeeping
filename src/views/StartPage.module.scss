@@ -1,25 +1,24 @@
-.wrapper{
+.wrapper {
   height: 100vh;
 }
-.button{
-    width: 100%;
-    &_wrapper{
-        padding: 16px;
-    }
-    
+.button {
+  width: 100%;
+  &_wrapper {
+    padding: 16px;
+  }
 }
-.icon{
-    width: 128px;
-    height: 128px;
-    &_wrapper{
-        padding: 98px 0;
-    }
+.icon {
+  width: 128px;
+  height: 128px;
+  &_wrapper {
+    padding: 98px 0;
+  }
 }
-.navIcon{
-    width: 30px;
-    height: 30px;
-    position: relative;
-    top: 2px;
+.navIcon {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: 2px;
 }
 .slide_fade_enter_active,
 .slide_fade_leave_active {
@@ -29,11 +28,14 @@
   width: 100%;
   height: 100%;
   transition: all 0.5s ease-out;
+  z-index: 999;
 }
 
 .slide_fade_enter_from {
   transform: translateX(-100vw);
+  z-index: 999;
 }
 .slide_fade_leave_to {
   transform: translateX(-100vw);
+  z-index: 999;
 }

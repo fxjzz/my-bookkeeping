@@ -46,7 +46,7 @@ export const StartPage = defineComponent({
                 leaveToClass={s.slide_fade_leave_to}
                 leaveActiveClass={s.slide_fade_leave_active}
               >
-                {overlayVisible.value && 
+                {overlayVisible.value &&
                   <Overlay onClose={() => (overlayVisible.value = false)} />
                 }
               </Transition>

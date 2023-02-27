@@ -16,6 +16,17 @@ export const ItemCreate = defineComponent({
     const refKind = ref("支出");
     const refPage = ref(0)
     const refHasMore = ref(false)
+    const onLoadMore = async () => {
+      const response = await http.get<Resources<Tag>>('/tags', {
+        kind: 'expenses',
+        page: refPage.value + 1,
+        _mock: 'tagIndex'
+      })
+      const { resources, pager } = response.data
+      refExpensesTags.value.push(...resources)
+      refHasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
+      refPage.value += 1
+    }
     onMounted(async () => {
       const response = await http.get<Resources<Tag>>('/tags', {
         kind: 'expenses',
@@ -24,6 +35,7 @@ export const ItemCreate = defineComponent({
       const { resources, pager } = response.data
       refExpensesTags.value = resources
       refHasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
+      refPage.value = 1
     })
     onMounted(async () => {
       const response = await http.get<{ resources: Tag[] }>('/tags', {
@@ -50,11 +62,9 @@ export const ItemCreate = defineComponent({
                           <Icon name="add" class={s.createTag} />
                         </div>
                         <div class={s.name}>
-
                           新增
                         </div>
                       </div>
-
                       {refExpensesTags.value.map(tag =>
                         <div class={[s.tag, s.selected]}>
                           <div class={s.sign}>
@@ -68,7 +78,7 @@ export const ItemCreate = defineComponent({
                     </div>
                     <div class={s.more}>
                       {refHasMore.value ?
-                        <Button class={s.loadMore}>加载更多</Button> :
+                        <Button class={s.loadMore} onClick={onLoadMore}>加载更多</Button> :
                         <span class={s.noMore}>没有更多</span>
                       }
                     </div>
