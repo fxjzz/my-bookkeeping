@@ -79,7 +79,7 @@ export const ItemCreate = defineComponent({
                     <div class={s.more}>
                       {refHasMore.value ?
                         <Button class={s.loadMore} onClick={onLoadMore}>加载更多</Button> :
-                        <span class={s.noMore}>没有更多</span>
+                        <span class={s.noMore}>没有了...</span>
                       }
                     </div>
                   </Tab>

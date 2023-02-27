@@ -6,7 +6,7 @@ import { history } from './shared/history'
 import '@svgstore'
 import { fetchMe, mePromise } from './shared/me'
 
-const router = createRouter({history,routes, })
+const router = createRouter({history,routes})
 
 fetchMe()
 
