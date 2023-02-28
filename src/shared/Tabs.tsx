@@ -7,7 +7,7 @@ export const Tabs = defineComponent({
       type: String as PropType<string>
     },
   },
-  emits:['update:selected'],
+  emits: ['update:selected'],
   setup: (props, context) => {
     return () => {
       const tabs = context.slots.default?.();
@@ -23,14 +23,17 @@ export const Tabs = defineComponent({
             {tabs.map((item) => (
               <li
                 class={item.props?.name === props.selected ? s.selected : ""}
-                onClick={()=>{context.emit('update:selected',item.props?.name)}}
+                onClick={() => { context.emit('update:selected', item.props?.name) }}
               >
                 {item.props?.name}
               </li>
             ))}
           </ul>
           <div>
-            {tabs.find(item =>item.props?.name===props.selected)}
+            {tabs.map(item =>
+              <div v-show={item.props?.name === props.selected}>
+                {item}
+              </div>)}
           </div>
         </div>
       );
