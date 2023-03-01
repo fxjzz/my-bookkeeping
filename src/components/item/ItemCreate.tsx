@@ -55,7 +55,6 @@ export const ItemCreate = defineComponent({
                     <Tags kind="income" v-model:selected={formData.tag_id} />
                   </Tab>
                 </Tabs>
-                {formData.amount}
                 <div class={s.inputPad_wrapper}>
                   <InputPad v-model:happenAt={formData.happen_at}
                     v-model:amount={formData.amount}
