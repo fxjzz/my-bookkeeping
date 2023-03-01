@@ -32,7 +32,6 @@ export const validate = <T extends FData>(formData: T, rules: Rules<T>) => {
         return;
     }
   });
-  console.log(errors);
 
   return errors;
 };
@@ -41,12 +40,12 @@ function isEmpty(value: null | undefined | string | number | FData) {
 }
 
 export function hasError(errors: Record<string, string[]>) {
-  let result = false
+  let result = false;
   for (let key in errors) {
     if (errors[key]?.length > 0) {
-      result = true
-      break
+      result = true;
+      break;
     }
   }
-  return result
+  return result;
 }
