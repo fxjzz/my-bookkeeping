@@ -1,5 +1,15 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { mockSession, mockTagIndex, mockItemCreate } from "../mock/mock";
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from "axios";
+import {
+  mockSession,
+  mockTagIndex,
+  mockItemCreate,
+  mockTagShow,
+} from "../mock/mock";
 
 type GetConfig = Omit<AxiosRequestConfig, "params" | "url" | "method">;
 type PostConfig = Omit<AxiosRequestConfig, "url" | "data" | "method">;
@@ -54,28 +64,34 @@ export class Http {
 }
 
 const mock = (response: AxiosResponse) => {
-  if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && location.hostname !== '192.168.3.57') {
-    return false
+  if (
+    location.hostname !== "localhost" &&
+    location.hostname !== "127.0.0.1" &&
+    location.hostname !== "192.168.3.57"
+  ) {
+    return false;
   }
   switch (response.config?.params?._mock) {
-    case 'tagIndex':
-      [response.status, response.data] = mockTagIndex(response.config)
-      return true
-    case 'itemCreate':
-      [response.status, response.data] = mockItemCreate(response.config)
+    case "tagIndex":
+      [response.status, response.data] = mockTagIndex(response.config);
+      return true;
+    case "itemCreate":
+      [response.status, response.data] = mockItemCreate(response.config);
     //   return true
     // case 'itemIndex':
     //   [response.status, response.data] = mockItemIndex(response.config)
     //   return true
     // case 'tagCreate':
     //   [response.status, response.data] = mockTagCreate(response.config)
-    case 'session':
-      [response.status, response.data] = mockSession(response.config)
-      return true
+    case "session":
+      [response.status, response.data] = mockSession(response.config);
+      return true;
+    case "tagShow":
+      [response.status, response.data] = mockTagShow(response.config);
+      return true;
   }
-  return false
-}
-
+  return false;
+};
 
 export const http = new Http("/api/v1");
 
@@ -87,19 +103,22 @@ http.instance.interceptors.request.use((config) => {
   return config;
 });
 
-http.instance.interceptors.response.use((response) => {
-  mock(response)
-  if (response.status >= 400) {
-    throw { response }
-  } else {
-    return response
+http.instance.interceptors.response.use(
+  (response) => {
+    mock(response);
+    if (response.status >= 400) {
+      throw { response };
+    } else {
+      return response;
+    }
+  },
+  (err) => {
+    mock(err.response);
+    if (err.response.status >= 400) {
+      throw err.response;
+    }
   }
-}, (err) => {
-  mock(err.response)
-  if (err.response.status >= 400) {
-    throw err.response
-  }
-})
+);
 
 http.instance.interceptors.response.use(
   (response) => {
@@ -115,3 +134,4 @@ http.instance.interceptors.response.use(
     throw error;
   }
 );
+
