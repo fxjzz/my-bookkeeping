@@ -1,5 +1,6 @@
 import { defineComponent, PropType, reactive } from 'vue';
 import { MainLayout } from '../../layout/MainLayout';
+import { BackIcon } from '../../shared/BackIcon';
 import { Button } from '../../shared/Button';
 import { EmojiSelect } from '../../shared/EmojiSelect';
 import { Icon } from '../../shared/Icon';
@@ -30,7 +31,7 @@ export const TagCreate = defineComponent({
     return () => (
       <MainLayout>{{
         title: () => '新建标签',
-        icon: () => <Icon name="larrow" class={s.icon} onClick={() => { }} />,
+        icon: () => <BackIcon />,
         default: () => (
           <TagForm />
         )

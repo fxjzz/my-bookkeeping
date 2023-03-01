@@ -3,6 +3,7 @@ import { Dialog } from "vant";
 import { defineComponent, onMounted, PropType, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { MainLayout } from "../../layout/MainLayout";
+import { BackIcon } from "../../shared/BackIcon";
 import { http } from "../../shared/Http";
 import { Icon } from "../../shared/Icon";
 import { Tab, Tabs } from "../../shared/Tabs";
@@ -19,7 +20,7 @@ export const ItemCreate = defineComponent({
   setup: (props, context) => {
     const formData = reactive({
       kind: '支出',
-      tag_id: [],
+      tag_id: 0,
       amount: 0,
       happen_at: new Date().toISOString()
     })
@@ -43,7 +44,7 @@ export const ItemCreate = defineComponent({
       <MainLayout class={s.layout}>
         {{
           title: () => "记一笔",
-          icon: () => <Icon name="larrow" class={s.navIcon} />,
+          icon: () => <BackIcon />,
           default: () => (
             <>
               <div class={s.wrapper}>
