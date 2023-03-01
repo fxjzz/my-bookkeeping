@@ -40,10 +40,10 @@ function isEmpty(value: null | undefined | string | number | FData) {
   return value === null || value === undefined || value === "";
 }
 
-export function hasError(errors:Record<string,string[]>){
+export function hasError(errors: Record<string, string[]>) {
   let result = false
-  for(let key in errors){
-    if(errors[key].length>0){
+  for (let key in errors) {
+    if (errors[key].length > 0) {
       result = true
       break
     }

@@ -10,15 +10,15 @@ import { TagForm } from './TagForm';
 export const TagCreate = defineComponent({
   setup: (props, context) => {
     const formData = reactive({
-      name:'',
-      sign:''
+      name: '',
+      sign: ''
     })
-    const errors = reactive<{[k in keyof typeof formData]?:string[]}>({})
-    const onSubmit = (e:Event)=>{
-      const rules:Rules<typeof formData>=[
-        {key:'name',type:'required',message:'必填'},
-        {key:'name',type:'pattern',message:'只能填 1 到 4 个字符',regex:/^.{1,4}$/},
-        {key:'sign',type:'required',message:'请选中一个emoji'}
+    const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({})
+    const onSubmit = (e: Event) => {
+      const rules: Rules<typeof formData> = [
+        { key: 'name', type: 'required', message: '必填' },
+        { key: 'name', type: 'pattern', message: '只能填 1 到 4 个字符', regex: /^.{1,4}$/ },
+        { key: 'sign', type: 'required', message: '请选中一个emoji' }
       ]
       Object.assign(errors, {
         name: undefined,

@@ -1,19 +1,23 @@
-.navbar{
-    background:linear-gradient(to bottom, var(--navbar-bg-start) 0%, var(--navbar-bg-end) 100%); ;
-    color:white;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    padding: 30px 16px 12px ;
+.navbar {
+  background: linear-gradient(
+    to bottom,
+    var(--navbar-bg-start) 0%,
+    var(--navbar-bg-end) 100%
+  );
+  color: white;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 30px 16px 12px;
 }
-.icon_wrapper{
-    width: 36px;
-    height: 36px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.icon_wrapper {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.title_wrapper{
-    margin-left: 12px;
-    font-size: 24px;
+.title_wrapper {
+  margin-left: 12px;
+  font-size: 24px;
 }

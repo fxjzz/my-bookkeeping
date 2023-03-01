@@ -1,30 +1,34 @@
-.wrapper{
-    height: calc(100vh - var(--welcome-nav-height));
+.wrapper {
+  height: calc(100vh - var(--welcome-nav-height));
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(
+    to bottom,
+    var(--welcome-bg-start) 0%,
+    var(--welcome-bg-end) 100%
+  );
+  > header {
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    background-image:linear-gradient(to bottom, var(--welcome-bg-start) 0%, var(--welcome-bg-end) 100%); ;
-    >header{
-        flex-shrink: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-top: 66px;
-        color: #d4d4ee;
-        > svg {
-          width: 100px;
-          height: 88px;
-        }
+    align-items: center;
+    padding-top: 66px;
+    color: #d4d4ee;
+    > svg {
+      width: 100px;
+      height: 88px;
     }
-    >main{
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        margin: 16px 16px var(--welcome-nav-gap);
-    }
+  }
+  > main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 16px 16px var(--welcome-nav-gap);
+  }
 }
-.icon{
-    width: 78px;
+.icon {
+  width: 78px;
 }
 .slide_fade_enter_active,
 .slide_fade_leave_active {

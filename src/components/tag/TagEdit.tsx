@@ -13,15 +13,15 @@ export const TagEdit = defineComponent({
   },
   setup: (props, context) => {
     const formData = reactive({
-      name:'',
-      sign:''
+      name: '',
+      sign: ''
     })
-    const errors = reactive<{[k in keyof typeof formData]?:string[]}>({})
-    const onSubmit = (e:Event)=>{
-      const rules:Rules<typeof formData>=[
-        {key:'name',type:'required',message:'必填'},
-        {key:'name',type:'pattern',message:'只能填 1 到 4 个字符',regex:/^.{1,4}$/},
-        {key:'sign',type:'required',message:'请选中一个emoji'}
+    const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({})
+    const onSubmit = (e: Event) => {
+      const rules: Rules<typeof formData> = [
+        { key: 'name', type: 'required', message: '必填' },
+        { key: 'name', type: 'pattern', message: '只能填 1 到 4 个字符', regex: /^.{1,4}$/ },
+        { key: 'sign', type: 'required', message: '请选中一个emoji' }
       ]
       Object.assign(errors, {
         name: undefined,
@@ -33,19 +33,19 @@ export const TagEdit = defineComponent({
     return () => (
       <MainLayout>
         {{
-          title:()=>'编辑标签',
-          icon:()=><Icon name='larrow' class={s.icon} onClick={()=>{}}/>,
-          default:()=><>
-          <TagForm />
-          <div class={s.actions}>
-            <Button level='danger' class={s.removeTags} onClick={() => { }}>删除标签</Button>
-            <Button level='danger' class={s.removeTagsAndItems} onClick={() => { }}>删除标签和记账</Button>
-          </div>
+          title: () => '编辑标签',
+          icon: () => <Icon name='larrow' class={s.icon} onClick={() => { }} />,
+          default: () => <>
+            <TagForm />
+            <div class={s.actions}>
+              <Button level='danger' class={s.removeTags} onClick={() => { }}>删除标签</Button>
+              <Button level='danger' class={s.removeTagsAndItems} onClick={() => { }}>删除标签和记账</Button>
+            </div>
           </>
         }}
       </MainLayout>
     )
-    
+
 
   }
 })

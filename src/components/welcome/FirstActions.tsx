@@ -4,9 +4,9 @@ import { FunctionalComponent } from 'vue';
 import { SkipFeatures } from '../../shared/SkipFeatures';
 export const FirstActions: FunctionalComponent = () => {
   return <div class={s.actions}>
-    <SkipFeatures class={s.fake}/>
+    <SkipFeatures class={s.fake} />
     <RouterLink to="/welcome/2" >下一页</RouterLink>
-    <SkipFeatures/>
+    <SkipFeatures />
   </div>
 }
 

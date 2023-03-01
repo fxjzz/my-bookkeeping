@@ -7,14 +7,14 @@ export const Navbar = defineComponent({
     }
   },
   setup: (props, context) => {
-    const {slots} = context
+    const { slots } = context
     return () => (
       <div class={s.navbar}>
         <span class={s.icon_wrapper}>
-            {slots.icon?.(s.icon)}
+          {slots.icon?.(s.icon)}
         </span>
         <span class={s.title_wrapper}>
-            {slots.title?.(s.title)}
+          {slots.title?.(s.title)}
         </span>
       </div>
     )

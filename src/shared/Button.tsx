@@ -10,37 +10,37 @@ export const Button = defineComponent({
       type: String as PropType<"important" | "normal" | "danger">,
       default: "important",
     },
-    type:{
+    type: {
       type: String as PropType<'submit' | 'button'>,
       default: 'button'
     },
-    disabled:{
-      type:Boolean,
-      default:false
+    disabled: {
+      type: Boolean,
+      default: false
     },
-    autoSelfDisabled:{
-      type:Boolean,
-      default:false
+    autoSelfDisabled: {
+      type: Boolean,
+      default: false
     }
   },
   setup: (props, context) => {
     const selfDisabled = ref(false)
-    const _disabled = computed(()=>{
-      if(props.autoSelfDisabled===false){
+    const _disabled = computed(() => {
+      if (props.autoSelfDisabled === false) {
         return props.disabled
       }
-      if(selfDisabled.value){
+      if (selfDisabled.value) {
         return true
-      }else{
+      } else {
         return props.disabled
       }
     })
-    const onClick = ()=>{
+    const onClick = () => {
       props.onClick?.()
-      selfDisabled.value=true
-      setTimeout(()=>{
-        selfDisabled.value=false
-      },500)
+      selfDisabled.value = true
+      setTimeout(() => {
+        selfDisabled.value = false
+      }, 500)
     }
     return () => (
       <button disabled={_disabled.value} type={props.type} onClick={onClick} class={[s.button, s[props.level]]}>

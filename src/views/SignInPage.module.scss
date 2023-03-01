@@ -1,19 +1,19 @@
-.icon{
+.icon {
   width: 48px;
   height: 48px;
 }
-.logo{
+.logo {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 42px 0 0;
-  .icon{
+  .icon {
     width: 64px;
     height: 68px;
   }
-  .appName{
-    color:#7878FF;    
+  .appName {
+    color: #7878ff;
     font-weight: bold;
     font-size: 32px;
   }
