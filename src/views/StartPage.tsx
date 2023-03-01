@@ -1,11 +1,10 @@
-import { defineComponent, ref, render, Transition } from "vue";
+import { defineComponent, ref, Transition } from "vue";
 import { RouterLink } from "vue-router";
 import { MainLayout } from "../layout/MainLayout";
 import { Button } from "../shared/Button";
 import { Center } from "../shared/Center";
 import { FloatButton } from "../shared/FloatButton";
 import { Icon } from "../shared/Icon";
-import { Navbar } from "../shared/Navbar";
 import { Overlay } from "../shared/Overlay";
 import s from "./StartPage.module.scss";
 
@@ -46,9 +45,9 @@ export const StartPage = defineComponent({
                 leaveToClass={s.slide_fade_leave_to}
                 leaveActiveClass={s.slide_fade_leave_active}
               >
-                {overlayVisible.value &&
+                {overlayVisible.value && (
                   <Overlay onClose={() => (overlayVisible.value = false)} />
-                }
+                )}
               </Transition>
             </>
           ),
@@ -57,3 +56,4 @@ export const StartPage = defineComponent({
     );
   },
 });
+

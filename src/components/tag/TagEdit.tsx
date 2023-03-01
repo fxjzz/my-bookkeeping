@@ -1,8 +1,6 @@
-import { defineComponent, PropType, reactive } from "vue";
+import { defineComponent } from "vue";
 import { MainLayout } from "../../layout/MainLayout";
 import { Button } from "../../shared/Button";
-import { Icon } from "../../shared/Icon";
-import { Rules, validate } from "../../shared/validate";
 import { TagForm } from "./TagForm";
 import s from "./Tag.module.scss";
 import { BackIcon } from "../../shared/BackIcon";

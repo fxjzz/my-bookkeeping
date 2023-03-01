@@ -1,13 +1,11 @@
 import { AxiosError } from "axios";
 import { Dialog } from "vant";
-import { defineComponent, onMounted, PropType, reactive, ref } from "vue";
+import { defineComponent, PropType, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { MainLayout } from "../../layout/MainLayout";
 import { BackIcon } from "../../shared/BackIcon";
 import { http } from "../../shared/Http";
-import { Icon } from "../../shared/Icon";
 import { Tab, Tabs } from "../../shared/Tabs";
-import { useTags } from "../../shared/useTags";
 import { InputPad } from "./InputPad";
 import s from "./ItemCreate.module.scss";
 import { Tags } from "./Tags";
@@ -19,27 +17,29 @@ export const ItemCreate = defineComponent({
   },
   setup: (props, context) => {
     const formData = reactive({
-      kind: '支出',
+      kind: "支出",
       tag_id: 0,
       amount: 0,
-      happen_at: new Date().toISOString()
-    })
-    const router = useRouter()
+      happen_at: new Date().toISOString(),
+    });
+    const router = useRouter();
     const onError = (error: AxiosError<ResourceError>) => {
       if (error.response?.status === 422) {
         Dialog.alert({
-          title: '出错',
-          message: Object.values(error.response.data.errors).join('\n')
-        })
+          title: "出错",
+          message: Object.values(error.response.data.errors).join("\n"),
+        });
       }
-      throw error
-    }
+      throw error;
+    };
     const onSubmit = async () => {
-      const response = await http.post<Resource<Item>>('/items', formData, {
-        params: { _mock: 'itemCreate' }
-      }).catch(onError)
-      router.push('/items')
-    }
+      const response = await http
+        .post<Resource<Item>>("/items", formData, {
+          params: { _mock: "itemCreate" },
+        })
+        .catch(onError);
+      router.push("/items");
+    };
     return () => (
       <MainLayout class={s.layout}>
         {{
@@ -57,9 +57,11 @@ export const ItemCreate = defineComponent({
                   </Tab>
                 </Tabs>
                 <div class={s.inputPad_wrapper}>
-                  <InputPad v-model:happenAt={formData.happen_at}
+                  <InputPad
+                    v-model:happenAt={formData.happen_at}
                     v-model:amount={formData.amount}
-                    onSubmit={onSubmit} />
+                    onSubmit={onSubmit}
+                  />
                 </div>
               </div>
             </>
@@ -69,3 +71,4 @@ export const ItemCreate = defineComponent({
     );
   },
 });
+

@@ -17,7 +17,6 @@ import { TagCreate } from "../components/tag/TagCreate";
 import { TagEdit } from "../components/tag/TagEdit";
 import { SignInPage } from "../views/SignInPage";
 import { StatisticsPage } from "../views/StatisticsPage";
-import { http } from "../shared/Http";
 
 export const routes: RouteRecordRaw[] = [
   { path: "/", redirect: "/welcome" },
@@ -53,7 +52,8 @@ export const routes: RouteRecordRaw[] = [
   },
   { path: "/start", component: StartPage },
   {
-    path: "/items", component: ItemPage,
+    path: "/items",
+    component: ItemPage,
     children: [
       { path: "", component: ItemList },
       { path: "create", component: ItemCreate },
@@ -73,3 +73,4 @@ export const routes: RouteRecordRaw[] = [
     component: StatisticsPage,
   },
 ];
+
