@@ -28,6 +28,7 @@ export const TimeTabsLayout = defineComponent({
   setup: (props, context) => {
     const overlayVisible = ref(false);
     const onClickMenu = () => {
+      document.documentElement.scrollTop = 0;
       overlayVisible.value = !overlayVisible.value;
     };
     const refSelected = ref("本月");

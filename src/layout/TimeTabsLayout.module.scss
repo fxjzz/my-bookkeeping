@@ -38,14 +38,15 @@
 }
 
 .slide_fade_enter_from {
-  z-index: 32;
+  z-index: 64;
   transform: translateX(-100vw);
 }
 .slide_fade_leave_to {
-  z-index: 32;
+  z-index: 64;
   transform: translateX(-100vw);
 }
 .icon {
   width: 32px;
   height: 32px;
 }
+

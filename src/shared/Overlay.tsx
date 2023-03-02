@@ -12,7 +12,7 @@ export const Overlay = defineComponent({
     const close = () => {
       props.onClose?.();
     };
-    const onClickSignIn = () => { }
+    const onClickSignIn = () => {};
     return () => (
       <div>
         <div class={s.mask} onClick={close}></div>
@@ -48,3 +48,4 @@ export const Overlay = defineComponent({
     );
   },
 });
+
