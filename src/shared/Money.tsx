@@ -1,7 +1,7 @@
 import { defineComponent, PropType } from "vue";
 export const Money = defineComponent({
   props: {
-    money: {
+    value: {
       type: Number as PropType<number>,
       required: true,
     },
@@ -17,6 +17,6 @@ export const Money = defineComponent({
         return amount;
       }
     };
-    return () => <span>{addZero(props.money / 100)}</span>;
+    return () => <span>{addZero(props.value / 100)}</span>;
   },
 });

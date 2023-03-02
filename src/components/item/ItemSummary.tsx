@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, PropType, ref } from "vue";
+import { defineComponent, onMounted, PropType, reactive, ref } from "vue";
 import { Button } from "../../shared/Button";
 import { Datetime } from "../../shared/DateTime";
 import { FloatButton } from "../../shared/FloatButton";
@@ -33,6 +33,21 @@ export const ItemSummary = defineComponent({
       page.value += 1;
     };
     onMounted(fetchItems);
+    const itemsBalance = reactive({
+      expenses: 0,
+      income: 0,
+      balance: 0,
+    });
+    onMounted(async () => {
+      if (!props.startDate || !props.endDate) return;
+      const response = await http.get("/items/balance", {
+        happen_after: props.startDate,
+        happen_before: props.endDate,
+        page: page.value + 1,
+        _mock: "itemIndexBalance",
+      });
+      Object.assign(itemsBalance, response.data);
+    });
     return () => (
       <div class={s.wrapper}>
         {items.value ? (
@@ -40,28 +55,28 @@ export const ItemSummary = defineComponent({
             <ul class={s.total}>
               <li>
                 <span>收入</span>
-                <span>128</span>
+                <Money value={itemsBalance.income} />
               </li>
               <li>
                 <span>支出</span>
-                <span>99</span>
+                <Money value={itemsBalance.expenses} />
               </li>
               <li>
                 <span>净收入</span>
-                <span>39</span>
+                <Money value={itemsBalance.balance} />
               </li>
             </ul>
             <ol class={s.list}>
               {items.value.map((item) => (
                 <li>
                   <div class={s.sign}>
-                    <span>{item.tags_id[0]}</span>
+                    <span>{item.tags![0].sign}</span>
                   </div>
                   <div class={s.text}>
                     <div class={s.tagAndAmount}>
                       <span class={s.tag}>{item.tags_id[0]}</span>
                       <span class={s.amount}>
-                        ￥<Money money={item.amount} />
+                        ￥<Money value={item.amount} />
                       </span>
                     </div>
                     <div class={s.time}>
