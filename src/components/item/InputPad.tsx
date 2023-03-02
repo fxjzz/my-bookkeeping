@@ -18,7 +18,7 @@ export const InputPad = defineComponent({
       const nString = n.toString();
       if (refAmount.value.slice(refAmount.value.indexOf(".")).length > 2)
         return;
-      if (refAmount.value.length >= 16) return;
+      if (refAmount.value.length >= 12) return;
       if (refAmount.value === "0" && nString === "0") return;
       if (refAmount.value.indexOf(".") >= 0 && nString === ".") return;
       if (refAmount.value === "0" && nString !== ".") refAmount.value = nString;
