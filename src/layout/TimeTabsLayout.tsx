@@ -12,11 +12,9 @@ const demo = defineComponent({
   props: {
     startDate: {
       type: String as PropType<string>,
-      required: true,
     },
     endDate: {
       type: String as PropType<string>,
-      required: true,
     },
   },
 });
@@ -24,8 +22,8 @@ export const TimeTabsLayout = defineComponent({
   props: {
     component: {
       type: Object as PropType<typeof demo>,
-      required: true
-    }
+      required: true,
+    },
   },
   setup: (props, context) => {
     const overlayVisible = ref(false);
@@ -34,10 +32,10 @@ export const TimeTabsLayout = defineComponent({
     };
     const refSelected = ref("本月");
     const time = new Time();
-    const customTime = reactive({
-      start: new Time().format(),
-      end: new Time().format(),
-    });
+    const customTime = reactive<{
+      start?: string;
+      end?: string;
+    }>({});
     const timeList = [
       {
         start: time.firstDayOfMonth(),
@@ -140,3 +138,4 @@ export const TimeTabsLayout = defineComponent({
     );
   },
 });
+
