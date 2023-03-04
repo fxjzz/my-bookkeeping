@@ -107,6 +107,7 @@ const mock = (response: AxiosResponse) => {
 
 export const http = new Http("/api/v1");
 
+//设置请求jwt
 http.instance.interceptors.request.use((config) => {
   const jwt = localStorage.getItem("jwt");
   if (jwt) {

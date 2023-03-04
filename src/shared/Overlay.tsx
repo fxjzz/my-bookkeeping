@@ -21,7 +21,8 @@ export const Overlay = defineComponent({
     const userName = (name: string) => {
       return name.slice(0, name.indexOf("@"));
     };
-    const onSignOut = async () => {
+    const onSignOut = async (e: Event) => {
+      e.preventDefault();
       await Dialog.confirm({
         message: "是否退出登录？",
       });
@@ -39,6 +40,13 @@ export const Overlay = defineComponent({
           <section class={s.currentUser}>
             {me.value ? (
               <div>
+                <div
+                  onClick={() => {
+                    console.log("123");
+                  }}
+                >
+                  用户头像
+                </div>
                 <h2>您好！{userName(me.value.email)}</h2>
                 <p onClick={onSignOut}>退出登录</p>
               </div>
