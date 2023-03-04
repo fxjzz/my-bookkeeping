@@ -40,6 +40,9 @@ export class Time {
   lastDayOfYear() {
     return new Time(new Date(this.date.getFullYear() + 1, 0, 0, 0, 0, 0))
   }
+  getTimestamp() {
+    return this.date.getTime()
+  }
   add(amount: number, unit: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond') {
     let date = new Date(this.date.getTime())
     switch (unit) {

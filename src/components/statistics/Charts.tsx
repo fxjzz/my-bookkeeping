@@ -5,9 +5,12 @@ import { Bars } from './Bars'
 import { LineChart } from './LineChart'
 import { PieChart } from './PieChart'
 import { http } from '../../shared/Http'
+import { Time } from '../../shared/time'
 
 type DataItem = { happen_at: string; amount: number }
 type Data1 = DataItem[]
+
+const DAY = 24 * 3600 * 1000
 
 export const Charts = defineComponent({
   props: {
@@ -23,8 +26,29 @@ export const Charts = defineComponent({
   setup: (props, context) => {
     const kind = ref('expenses')
     const originalData = ref<Data1>([])
-    const lineData = computed(() => {
-      return originalData.value.map((item) => [item.happen_at, item.amount] as [string, number])
+    const lineData = computed<[string, number][]>(() => {
+      if (!props.startDate || !props.endDate) {
+        return []
+      }
+      const array = []
+      const diff = new Date(props.endDate).getTime() - new Date(props.startDate).getTime()
+      const n = diff / DAY + 1
+      console.log(n)
+
+      let data1Index = 0
+      for (let i = 0; i < n; i++) {
+        const time = new Time(props.startDate + 'T00:00:00.000+0800').add(i, 'day').getTimestamp() //每一天
+        //原数组存在日期，则替换
+        if (originalData.value[data1Index] && new Date(originalData.value[data1Index].happen_at).getTime() === time) {
+          array.push([new Date(time).toISOString(), originalData.value[data1Index].amount])
+          data1Index += 1
+        } else {
+          array.push([new Date(time).toISOString(), 0])
+        }
+      }
+      console.log(array)
+
+      return array as [string, number][]
     })
     onMounted(async () => {
       const response = await http.get<{ groups: Data1; summary: Number }>('/items/summary', {
@@ -34,7 +58,6 @@ export const Charts = defineComponent({
         _mock: 'itemSummary'
       })
       originalData.value = response.data.groups
-      console.log(lineData.value)
     })
 
     return () => (
