@@ -4,11 +4,14 @@ import s from "./Tabs.module.scss";
 export const Tabs = defineComponent({
   props: {
     selected: {
-      type: String as PropType<string>
+      type: String as PropType<string>,
     },
-
+    rerenderOrSelect: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+    },
   },
-  emits: ['update:selected'],
+  emits: ["update:selected"],
   setup: (props, context) => {
     return () => {
       const tabs = context.slots.default?.();
@@ -24,18 +27,25 @@ export const Tabs = defineComponent({
             {tabs.map((item) => (
               <li
                 class={item.props?.name === props.selected ? s.selected : ""}
-                onClick={() => { context.emit('update:selected', item.props?.name) }}
+                onClick={() => {
+                  context.emit("update:selected", item.props?.name);
+                }}
               >
                 {item.props?.name}
               </li>
             ))}
           </ul>
-          <div>
-            {tabs.map(item =>
-              <div v-show={item.props?.name === props.selected}>
-                {item}
-              </div>)}
-          </div>
+          {props.rerenderOrSelect ? (
+            <div key={props.selected}>
+              {tabs.find((item) => item.props?.name === props.selected)}
+            </div>
+          ) : (
+            <div>
+              {tabs.map((item) => (
+                <div v-show={item.props?.name === props.selected}>{item}</div>
+              ))}
+            </div>
+          )}
         </div>
       );
     };
@@ -52,3 +62,4 @@ export const Tab = defineComponent({
     return () => <div>{context.slots.default?.()}</div>;
   },
 });
+

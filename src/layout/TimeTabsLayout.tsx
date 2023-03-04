@@ -24,6 +24,10 @@ export const TimeTabsLayout = defineComponent({
       type: Object as PropType<typeof demo>,
       required: true,
     },
+    rerenderOnSwitchTab: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup: (props, context) => {
     const overlayVisible = ref(false);
@@ -74,6 +78,7 @@ export const TimeTabsLayout = defineComponent({
           default: () => (
             <>
               <Tabs
+                rerenderOrSelect={props.rerenderOnSwitchTab}
                 v-model:selected={refSelected.value}
                 onUpdate:selected={onSelect}
               >

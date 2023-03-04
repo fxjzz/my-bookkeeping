@@ -1,10 +1,10 @@
-import { defineComponent } from 'vue';
-import { Charts } from '../components/statistics/Charts';
-import { TimeTabsLayout } from '../layout/TimeTabsLayout';
+import { defineComponent } from "vue";
+import { Charts } from "../components/statistics/Charts";
+import { TimeTabsLayout } from "../layout/TimeTabsLayout";
 export const StatisticsPage = defineComponent({
   setup: (props, context) => {
     return () => (
-      <TimeTabsLayout component={Charts} />
-    )
-  }
-})
+      <TimeTabsLayout rerenderOnSwitchTab={true} component={Charts} />
+    );
+  },
+});
