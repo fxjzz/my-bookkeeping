@@ -30,25 +30,16 @@ export const Charts = defineComponent({
       if (!props.startDate || !props.endDate) {
         return []
       }
-      const array = []
       const diff = new Date(props.endDate).getTime() - new Date(props.startDate).getTime()
       const n = diff / DAY + 1
       console.log(n)
-
-      let data1Index = 0
-      for (let i = 0; i < n; i++) {
+      return Array.from({ length: n }).map((_, i) => {
         const time = new Time(props.startDate + 'T00:00:00.000+0800').add(i, 'day').getTimestamp() //每一天
         //原数组存在日期，则替换
-        if (originalData.value[data1Index] && new Date(originalData.value[data1Index].happen_at).getTime() === time) {
-          array.push([new Date(time).toISOString(), originalData.value[data1Index].amount])
-          data1Index += 1
-        } else {
-          array.push([new Date(time).toISOString(), 0])
-        }
-      }
-      console.log(array)
-
-      return array as [string, number][]
+        const item = originalData.value[0]
+        const amount = item && new Date(item.happen_at).getTime() === time ? originalData.value.shift()!.amount : 0
+        return [new Date(time).toISOString(), amount]
+      })
     })
     onMounted(async () => {
       const response = await http.get<{ groups: Data1; summary: Number }>('/items/summary', {
