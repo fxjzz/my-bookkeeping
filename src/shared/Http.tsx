@@ -12,6 +12,7 @@ import {
   mockTagEdit,
   mockItemIndex,
   mockItemIndexBalance,
+  mockItemSummary,
 } from "../mock/mock";
 
 type GetConfig = Omit<AxiosRequestConfig, "params" | "url" | "method">;
@@ -100,6 +101,9 @@ const mock = (response: AxiosResponse) => {
       return true;
     case "itemIndexBalance":
       [response.status, response.data] = mockItemIndexBalance(response.config);
+      return true;
+    case "itemSummary":
+      [response.status, response.data] = mockItemSummary(response.config);
       return true;
   }
   return false;
