@@ -1,22 +1,22 @@
-import { defineComponent, reactive, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useBool } from "../hooks/useBool";
-import { MainLayout } from "../layout/MainLayout";
-import { BackIcon } from "../shared/BackIcon";
-import { Button } from "../shared/Button";
-import { Form, FormItem } from "../shared/Form";
-import { http } from "../shared/Http";
-import { Icon } from "../shared/Icon";
-import { refreshMe } from "../shared/me";
-import { hasError, validate } from "../shared/validate";
-import s from "./SignInPage.module.scss";
+import { defineComponent, reactive, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useBool } from '../hooks/useBool';
+import { MainLayout } from '../layout/MainLayout';
+import { BackIcon } from '../shared/BackIcon';
+import { Button } from '../shared/Button';
+import { Form, FormItem } from '../shared/Form';
+import { http } from '../shared/Http';
+import { Icon } from '../shared/Icon';
+import { refreshMe } from '../shared/me';
+import { hasError, validate } from '../shared/validate';
+import s from './SignInPage.module.scss';
 export const SignInPage = defineComponent({
   setup: (props, context) => {
     const router = useRouter();
     const route = useRoute();
     const formData = reactive({
-      email: "",
-      code: "",
+      email: '',
+      code: '',
     });
     const errors = reactive({
       email: [],
@@ -38,25 +38,25 @@ export const SignInPage = defineComponent({
       Object.assign(
         errors,
         validate(formData, [
-          { key: "email", type: "required", message: "必填" },
+          { key: 'email', type: 'required', message: '必填' },
           {
-            key: "email",
-            type: "pattern",
+            key: 'email',
+            type: 'pattern',
             regex: /.+@.+/,
-            message: "必须是邮箱地址",
+            message: '必须是邮箱地址',
           },
-          { key: "code", type: "required", message: "必填" },
+          { key: 'code', type: 'required', message: '必填' },
         ])
       );
       if (!hasError(errors)) {
         const response = await http
-          .post<{ jwt: string }>("/session", formData)
+          .post<{ jwt: string }>('/session', formData)
           .catch(onError);
-        localStorage.setItem("jwt", response.data.jwt);
+        localStorage.setItem('jwt', response.data.jwt);
         // router.push('/sign_in?return_to='+ encodeURIComponent(route.fullPath))
         const returnTo = route.query.return_to?.toString();
         refreshMe();
-        router.push(returnTo || "/");
+        router.push(returnTo || '/');
       }
     };
     const onError = (error: any) => {
@@ -68,7 +68,7 @@ export const SignInPage = defineComponent({
     const onClickSendValidationCode = async () => {
       disabled();
       const response = await http
-        .post("/validation_codes", { email: formData.email })
+        .post('/validation_codes', { email: formData.email })
         .catch(onError)
         .finally(enable);
       //成功
@@ -77,7 +77,7 @@ export const SignInPage = defineComponent({
     return () => (
       <MainLayout>
         {{
-          title: () => "登录",
+          title: () => '登录',
           icon: () => <BackIcon />,
           default: () => (
             <div class={s.wrapper}>
@@ -103,7 +103,7 @@ export const SignInPage = defineComponent({
                   v-model={formData.code}
                   error={errors.code?.[0]}
                 />
-                <FormItem style={{ paddingTop: "96px" }}>
+                <FormItem style={{ paddingTop: '96px' }}>
                   <Button type="submit">登录</Button>
                 </FormItem>
               </Form>

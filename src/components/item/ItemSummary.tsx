@@ -5,13 +5,13 @@ import {
   reactive,
   ref,
   watch,
-} from "vue";
-import { Button } from "../../shared/Button";
-import { Datetime } from "../../shared/DateTime";
-import { FloatButton } from "../../shared/FloatButton";
-import { http } from "../../shared/Http";
-import { Money } from "../../shared/Money";
-import s from "./ItemSummary.module.scss";
+} from 'vue';
+import { Button } from '../../shared/Button';
+import { Datetime } from '../../shared/DateTime';
+import { FloatButton } from '../../shared/FloatButton';
+import { http } from '../../shared/Http';
+import { Money } from '../../shared/Money';
+import s from './ItemSummary.module.scss';
 export const ItemSummary = defineComponent({
   props: {
     startDate: {
@@ -27,21 +27,21 @@ export const ItemSummary = defineComponent({
     const page = ref(0);
     const fetchItemsBalance = async () => {
       if (!props.startDate || !props.endDate) return;
-      const response = await http.get("/items/balance", {
+      const response = await http.get('/items/balance', {
         happen_after: props.startDate,
         happen_before: props.endDate,
         page: page.value + 1,
-        _mock: "itemIndexBalance",
+        _mock: 'itemIndexBalance',
       });
       Object.assign(itemsBalance, response.data);
     };
     const fetchItems = async () => {
       if (!props.startDate || !props.endDate) return;
-      const response = await http.get<Resources<Item>>("/items", {
+      const response = await http.get<Resources<Item>>('/items', {
         happen_after: props.startDate,
         happen_before: props.endDate,
         page: page.value + 1,
-        _mock: "itemIndex",
+        _mock: 'itemIndex',
       });
       const { resources, pager } = response.data;
       items.value?.push(...resources);
@@ -125,4 +125,3 @@ export const ItemSummary = defineComponent({
     );
   },
 });
-

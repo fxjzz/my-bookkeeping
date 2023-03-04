@@ -1,13 +1,13 @@
-import { Overlay as VOverlay } from "vant";
-import { defineComponent, PropType, reactive, ref, Transition } from "vue";
-import { ItemSummary } from "../components/item/ItemSummary";
-import { Form, FormItem } from "../shared/Form";
-import { Icon } from "../shared/Icon";
-import { Overlay } from "../shared/Overlay";
-import { Tab, Tabs } from "../shared/Tabs";
-import { Time } from "../shared/time";
-import s from "./TimeTabsLayout.module.scss";
-import { MainLayout } from "./MainLayout";
+import { Overlay as VOverlay } from 'vant';
+import { defineComponent, PropType, reactive, ref, Transition } from 'vue';
+import { ItemSummary } from '../components/item/ItemSummary';
+import { Form, FormItem } from '../shared/Form';
+import { Icon } from '../shared/Icon';
+import { Overlay } from '../shared/Overlay';
+import { Tab, Tabs } from '../shared/Tabs';
+import { Time } from '../shared/time';
+import s from './TimeTabsLayout.module.scss';
+import { MainLayout } from './MainLayout';
 const demo = defineComponent({
   props: {
     startDate: {
@@ -35,7 +35,7 @@ export const TimeTabsLayout = defineComponent({
       document.documentElement.scrollTop = 0;
       overlayVisible.value = !overlayVisible.value;
     };
-    const refSelected = ref("本月");
+    const refSelected = ref('本月');
     const time = new Time();
     const tempTime = reactive({
       start: new Time().format(),
@@ -51,8 +51,8 @@ export const TimeTabsLayout = defineComponent({
         end: time.lastDayOfMonth(),
       },
       {
-        start: time.add(-1, "month").firstDayOfMonth(),
-        end: time.add(-1, "month").lastDayOfMonth(),
+        start: time.add(-1, 'month').firstDayOfMonth(),
+        end: time.add(-1, 'month').lastDayOfMonth(),
       },
       {
         start: time.firstDayOfYear(),
@@ -66,14 +66,14 @@ export const TimeTabsLayout = defineComponent({
       Object.assign(customTime, tempTime);
     };
     const onSelect = (value: string) => {
-      if (value === "自定义时间") {
+      if (value === '自定义时间') {
         refOverlayVisible.value = true;
       }
     };
     return () => (
       <MainLayout>
         {{
-          title: () => "山竹记账",
+          title: () => '山竹记账',
           icon: () => <Icon name="menu" class={s.icon} onClick={onClickMenu} />,
           default: () => (
             <>
@@ -149,4 +149,3 @@ export const TimeTabsLayout = defineComponent({
     );
   },
 });
-

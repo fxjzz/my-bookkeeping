@@ -1,10 +1,10 @@
-import { defineComponent, PropType, ref } from "vue";
-import { RouterLink, useRoute, useRouter } from "vue-router";
-import { Button } from "../../shared/Button";
-import { http } from "../../shared/Http";
-import { Icon } from "../../shared/Icon";
-import { useTags } from "../../shared/useTags";
-import s from "./Tags.module.scss";
+import { defineComponent, PropType, ref } from 'vue';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
+import { Button } from '../../shared/Button';
+import { http } from '../../shared/Http';
+import { Icon } from '../../shared/Icon';
+import { useTags } from '../../shared/useTags';
+import s from './Tags.module.scss';
 export const Tags = defineComponent({
   props: {
     kind: {
@@ -13,19 +13,19 @@ export const Tags = defineComponent({
     },
     selected: Number,
   },
-  emits: ["update:selected"],
+  emits: ['update:selected'],
   setup: (props, context) => {
     const route = useRoute();
     const router = useRouter();
     const { tags, hasMore, fetchTags } = useTags((page) => {
-      return http.get<Resources<Tag>>("/tags", {
+      return http.get<Resources<Tag>>('/tags', {
         kind: props.kind,
         page: page + 1,
-        _mock: "tagIndex",
+        _mock: 'tagIndex',
       });
     });
     const onSelect = (tag: Tag) => {
-      context.emit("update:selected", tag.id);
+      context.emit('update:selected', tag.id);
     };
     const timer = ref<number>();
     const currentTag = ref<HTMLDivElement>();
@@ -66,7 +66,7 @@ export const Tags = defineComponent({
           </RouterLink>
           {tags.value.map((tag) => (
             <div
-              class={[s.tag, props.selected === tag.id ? s.selected : ""]}
+              class={[s.tag, props.selected === tag.id ? s.selected : '']}
               onClick={() => onSelect(tag)}
               onTouchstart={(e) => onTouchStart(tag, e)}
               onTouchend={onTouchEnd}

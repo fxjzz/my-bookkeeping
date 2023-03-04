@@ -1,9 +1,9 @@
-import { faker } from "@faker-js/faker";
-import { AxiosRequestConfig } from "axios";
+import { faker } from '@faker-js/faker';
+import { AxiosRequestConfig } from 'axios';
 
 type Mock = (config: AxiosRequestConfig) => [number, any];
 
-faker.setLocale("zh_CN");
+faker.setLocale('zh_CN');
 
 export const mockItemIndexBalance: Mock = (config) => {
   return [
@@ -21,9 +21,9 @@ export const mockItemSummary: Mock = (config) => {
     200,
     {
       groups: [
-        { happen_at: "2018-06-18T00:00:00.000+0800", amount: 100 },
-        { happen_at: "2018-06-22T00:00:00.000+0800", amount: 300 },
-        { happen_at: "2018-06-29T00:00:00.000+0800", amount: 200 },
+        { happen_at: '2018-06-18T00:00:00.000+0800', amount: 100 },
+        { happen_at: '2018-06-22T00:00:00.000+0800', amount: 300 },
+        { happen_at: '2018-06-29T00:00:00.000+0800', amount: 200 },
       ],
       summary: 600,
     },
@@ -43,7 +43,7 @@ export const mockItemIndex: Mock = (config) => {
     id: createId(),
     name: faker.lorem.word(),
     sign: faker.internet.emoji(),
-    kind: "expenses",
+    kind: 'expenses',
     ...attrs,
   });
   const createItem = (n = 1, attrs?: any) =>
@@ -81,7 +81,7 @@ export const mockTagEdit: Mock = (config) => {
     id: createId(),
     name: faker.lorem.word(),
     sign: faker.internet.emoji(),
-    kind: "expenses",
+    kind: 'expenses',
     ...attrs,
   });
   return [200, { resource: createTag() }];
@@ -92,7 +92,7 @@ export const mockTagShow: Mock = (config) => {
     id: createId(),
     name: faker.lorem.word(),
     sign: faker.internet.emoji(),
-    kind: "expenses",
+    kind: 'expenses',
     ...attrs,
   });
   return [200, { resource: createTag() }];
@@ -134,13 +134,13 @@ export const mockTagIndex: Mock = (config) => {
     resources: createTag(n),
     pager: createPager(page),
   });
-  if (kind === "expenses" && (!page || page === 1)) {
+  if (kind === 'expenses' && (!page || page === 1)) {
     return [200, createBody(25)];
-  } else if (kind === "expenses" && page === 2) {
+  } else if (kind === 'expenses' && page === 2) {
     return [200, createBody(1)];
-  } else if (kind === "income" && (!page || page === 1)) {
+  } else if (kind === 'income' && (!page || page === 1)) {
     return [200, createBody(25)];
-  } else if (kind === "income" && page === 2) {
+  } else if (kind === 'income' && page === 2) {
     return [200, createBody(1)];
   } else {
     return [200, { resources: createTag(1) }];
@@ -157,12 +157,11 @@ export const mockItemCreate: Mock = (config) => {
         amount: 9900,
         note: null,
         tags_id: [3508],
-        happen_at: "2020-10-29T16:00:00.000Z",
-        created_at: "2022-07-03T15:35:56.301Z",
-        updated_at: "2022-07-03T15:35:56.301Z",
-        kind: "expenses",
+        happen_at: '2020-10-29T16:00:00.000Z',
+        created_at: '2022-07-03T15:35:56.301Z',
+        updated_at: '2022-07-03T15:35:56.301Z',
+        kind: 'expenses',
       },
     },
   ];
 };
-

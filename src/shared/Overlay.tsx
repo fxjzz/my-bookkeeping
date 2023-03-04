@@ -1,9 +1,9 @@
-import { defineComponent, onMounted, PropType, ref } from "vue";
-import { RouterLink, useRoute, useRouter } from "vue-router";
-import { Icon } from "./Icon";
-import s from "./Overlay.module.scss";
-import { mePromise } from "./me";
-import { Dialog } from "vant";
+import { defineComponent, onMounted, PropType, ref } from 'vue';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
+import { Icon } from './Icon';
+import s from './Overlay.module.scss';
+import { mePromise } from './me';
+import { Dialog } from 'vant';
 
 export const Overlay = defineComponent({
   props: {
@@ -19,15 +19,15 @@ export const Overlay = defineComponent({
     const router = useRouter();
     const me = ref<User>();
     const userName = (name: string) => {
-      return name.slice(0, name.indexOf("@"));
+      return name.slice(0, name.indexOf('@'));
     };
     const onSignOut = async (e: Event) => {
       e.preventDefault();
       await Dialog.confirm({
-        message: "是否退出登录？",
+        message: '是否退出登录？',
       });
-      localStorage.removeItem("jwt");
-      router.push("/sign_in");
+      localStorage.removeItem('jwt');
+      router.push('/sign_in');
     };
     onMounted(async () => {
       const response = await mePromise;
@@ -42,7 +42,7 @@ export const Overlay = defineComponent({
               <div>
                 <div
                   onClick={() => {
-                    console.log("123");
+                    console.log('123');
                   }}
                 >
                   用户头像
@@ -83,4 +83,3 @@ export const Overlay = defineComponent({
     );
   },
 });
-

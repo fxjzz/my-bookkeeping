@@ -1,26 +1,26 @@
-import { defineComponent, onMounted, PropType, ref, watch } from "vue";
-import s from "./LineChart.module.scss";
-import * as echarts from "echarts";
-import { Time } from "../../shared/time";
-import { getMoney } from "../../shared/Money";
+import { defineComponent, onMounted, PropType, ref, watch } from 'vue';
+import s from './LineChart.module.scss';
+import * as echarts from 'echarts';
+import { Time } from '../../shared/time';
+import { getMoney } from '../../shared/Money';
 
 const echartsOption = {
   tooltip: {
     show: true,
-    trigger: "axis",
+    trigger: 'axis',
     formatter: ([item]: any) => {
       const [x, y] = item.data;
-      return `${new Time(new Date(x)).format("YYYY年MM月DD日")} ￥${getMoney(
+      return `${new Time(new Date(x)).format('YYYY年MM月DD日')} ￥${getMoney(
         y
       )}`;
     },
   },
   grid: [{ left: 16, top: 20, right: 16, bottom: 20 }],
   xAxis: {
-    type: "time",
-    boundaryGap: ["3%", "0%"],
+    type: 'time',
+    boundaryGap: ['3%', '0%'],
     axisLabel: {
-      formatter: (value: string) => new Time(new Date(value)).format("MM-DD"),
+      formatter: (value: string) => new Time(new Date(value)).format('MM-DD'),
     },
     axisTick: {
       alignWithLabel: true,
@@ -28,11 +28,11 @@ const echartsOption = {
   },
   yAxis: {
     show: true,
-    type: "value",
+    type: 'value',
     splitLine: {
       show: true,
       lineStyle: {
-        type: "dashed",
+        type: 'dashed',
       },
     },
     axisLabel: {
@@ -74,7 +74,7 @@ export const LineChart = defineComponent({
         ...echartsOption,
         series: [
           {
-            type: "line",
+            type: 'line',
           },
         ],
       });
@@ -82,4 +82,3 @@ export const LineChart = defineComponent({
     return () => <div ref={refDiv} class={s.wrapper}></div>;
   },
 });
-

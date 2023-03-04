@@ -3,7 +3,7 @@ import axios, {
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
-} from "axios";
+} from 'axios';
 import {
   mockSession,
   mockTagIndex,
@@ -13,12 +13,12 @@ import {
   mockItemIndex,
   mockItemIndexBalance,
   mockItemSummary,
-} from "../mock/mock";
+} from '../mock/mock';
 
-type GetConfig = Omit<AxiosRequestConfig, "params" | "url" | "method">;
-type PostConfig = Omit<AxiosRequestConfig, "url" | "data" | "method">;
-type PatchConfig = Omit<AxiosRequestConfig, "url" | "data">;
-type DeleteConfig = Omit<AxiosRequestConfig, "params">;
+type GetConfig = Omit<AxiosRequestConfig, 'params' | 'url' | 'method'>;
+type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method'>;
+type PatchConfig = Omit<AxiosRequestConfig, 'url' | 'data'>;
+type DeleteConfig = Omit<AxiosRequestConfig, 'params'>;
 
 export class Http {
   instance: AxiosInstance;
@@ -36,7 +36,7 @@ export class Http {
       ...config,
       url: url,
       params: query,
-      method: "get",
+      method: 'get',
     });
   }
   post<R = unknown>(
@@ -44,14 +44,14 @@ export class Http {
     data?: Record<string, JSONValue>,
     config?: PostConfig
   ) {
-    return this.instance.request<R>({ ...config, url, data, method: "post" });
+    return this.instance.request<R>({ ...config, url, data, method: 'post' });
   }
   patch<R = unknown>(
     url: string,
     data?: Record<string, JSONValue>,
     config?: PatchConfig
   ) {
-    return this.instance.request<R>({ ...config, url, data, method: "patch" });
+    return this.instance.request<R>({ ...config, url, data, method: 'patch' });
   }
   delete<R = unknown>(
     url: string,
@@ -62,24 +62,24 @@ export class Http {
       ...config,
       url: url,
       params: query,
-      method: "delete",
+      method: 'delete',
     });
   }
 }
 
 const mock = (response: AxiosResponse) => {
   if (
-    location.hostname !== "localhost" &&
-    location.hostname !== "127.0.0.1" &&
-    location.hostname !== "192.168.3.57"
+    location.hostname !== 'localhost' &&
+    location.hostname !== '127.0.0.1' &&
+    location.hostname !== '192.168.3.57'
   ) {
     return false;
   }
   switch (response.config?.params?._mock) {
-    case "tagIndex":
+    case 'tagIndex':
       [response.status, response.data] = mockTagIndex(response.config);
       return true;
-    case "itemCreate":
+    case 'itemCreate':
       [response.status, response.data] = mockItemCreate(response.config);
     //   return true
     // case 'itemIndex':
@@ -87,33 +87,33 @@ const mock = (response: AxiosResponse) => {
     //   return true
     // case 'tagCreate':
     //   [response.status, response.data] = mockTagCreate(response.config)
-    case "session":
+    case 'session':
       [response.status, response.data] = mockSession(response.config);
       return true;
-    case "tagShow":
+    case 'tagShow':
       [response.status, response.data] = mockTagShow(response.config);
       return true;
-    case "tagEdit":
+    case 'tagEdit':
       [response.status, response.data] = mockTagEdit(response.config);
       return true;
-    case "itemIndex":
+    case 'itemIndex':
       [response.status, response.data] = mockItemIndex(response.config);
       return true;
-    case "itemIndexBalance":
+    case 'itemIndexBalance':
       [response.status, response.data] = mockItemIndexBalance(response.config);
       return true;
-    case "itemSummary":
+    case 'itemSummary':
       [response.status, response.data] = mockItemSummary(response.config);
       return true;
   }
   return false;
 };
 
-export const http = new Http("/api/v1");
+export const http = new Http('/api/v1');
 
 //设置请求jwt
 http.instance.interceptors.request.use((config) => {
-  const jwt = localStorage.getItem("jwt");
+  const jwt = localStorage.getItem('jwt');
   if (jwt) {
     config.headers!.Authorization = `Bearer ${jwt}`; //让请求头里有jwt
   }
@@ -145,10 +145,9 @@ http.instance.interceptors.response.use(
     if (error.response) {
       const axiosError = error as AxiosError;
       if (axiosError.response?.status === 429) {
-        alert("你太频繁了");
+        alert('你太频繁了');
       }
     }
     throw error;
   }
 );
-

@@ -4,7 +4,7 @@ interface FData {
 type Rule<T> = {
   key: keyof T;
   message: string;
-} & ({ type: "required" } | { type: "pattern"; regex: RegExp });
+} & ({ type: 'required' } | { type: 'pattern'; regex: RegExp });
 export type Rules<T> = Rule<T>[];
 
 export const validate = <T extends FData>(formData: T, rules: Rules<T>) => {
@@ -16,13 +16,13 @@ export const validate = <T extends FData>(formData: T, rules: Rules<T>) => {
     const { key, type, message } = rule; //{key:'name',type:'required',message:'必填'},
     const value = formData[key];
     switch (type) {
-      case "required":
+      case 'required':
         if (isEmpty(value)) {
           errors[key] = errors[key] ?? [];
           errors[key]?.push(message);
         }
         break;
-      case "pattern":
+      case 'pattern':
         if (!isEmpty(value) && !rule.regex.test(value!.toString())) {
           errors[key] = errors[key] ?? [];
           errors[key]?.push(message);
@@ -36,7 +36,7 @@ export const validate = <T extends FData>(formData: T, rules: Rules<T>) => {
   return errors;
 };
 function isEmpty(value: null | undefined | string | number | FData) {
-  return value === null || value === undefined || value === "";
+  return value === null || value === undefined || value === '';
 }
 
 export function hasError(errors: Record<string, string[]>) {

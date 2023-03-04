@@ -1,18 +1,18 @@
-import { defineComponent, ref, Transition } from "vue";
-import { RouterLink } from "vue-router";
-import { MainLayout } from "../layout/MainLayout";
-import { Button } from "../shared/Button";
-import { Center } from "../shared/Center";
-import { FloatButton } from "../shared/FloatButton";
-import { Icon } from "../shared/Icon";
-import { Overlay } from "../shared/Overlay";
-import s from "./StartPage.module.scss";
+import { defineComponent, ref, Transition } from 'vue';
+import { RouterLink } from 'vue-router';
+import { MainLayout } from '../layout/MainLayout';
+import { Button } from '../shared/Button';
+import { Center } from '../shared/Center';
+import { FloatButton } from '../shared/FloatButton';
+import { Icon } from '../shared/Icon';
+import { Overlay } from '../shared/Overlay';
+import s from './StartPage.module.scss';
 
 export const StartPage = defineComponent({
   setup: (props, context) => {
     const overlayVisible = ref(false);
     const onClick = () => {
-      console.log("hi");
+      console.log('hi');
     };
     const onClickMenu = () => {
       overlayVisible.value = !overlayVisible.value;
@@ -20,7 +20,7 @@ export const StartPage = defineComponent({
     return () => (
       <MainLayout class={s.wrapper}>
         {{
-          title: () => "山竹记账",
+          title: () => '山竹记账',
           icon: () => (
             <Icon name="menu" class={s.navIcon} onClick={onClickMenu} />
           ),
@@ -56,4 +56,3 @@ export const StartPage = defineComponent({
     );
   },
 });
-

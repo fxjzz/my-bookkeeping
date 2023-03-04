@@ -1,5 +1,5 @@
-import { computed, defineComponent, PropType } from "vue";
-import { Time } from "./time";
+import { computed, defineComponent, PropType } from 'vue';
+import { Time } from './time';
 export const Datetime = defineComponent({
   props: {
     value: {
@@ -8,7 +8,7 @@ export const Datetime = defineComponent({
     },
     format: {
       type: String,
-      default: "YYYY-MM-DD HH:mm:ss",
+      default: 'YYYY-MM-DD HH:mm:ss',
     },
   },
   setup: (props, context) => {
