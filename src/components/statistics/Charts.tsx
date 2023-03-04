@@ -1,4 +1,4 @@
-import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
+import { computed, defineComponent, onMounted, PropType, ref, watch } from 'vue'
 import { FormItem } from '../../shared/Form'
 import s from './Charts.module.scss'
 import { Bars } from './Bars'
@@ -32,7 +32,6 @@ export const Charts = defineComponent({
       }
       const diff = new Date(props.endDate).getTime() - new Date(props.startDate).getTime()
       const n = diff / DAY + 1
-      console.log(n)
       return Array.from({ length: n }).map((_, i) => {
         const time = new Time(props.startDate + 'T00:00:00.000+0800').add(i, 'day').getTimestamp() //每一天
         //原数组存在日期，则替换
