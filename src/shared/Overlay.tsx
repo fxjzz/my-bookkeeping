@@ -1,38 +1,38 @@
-import { defineComponent, onMounted, PropType, ref } from 'vue';
-import { RouterLink, useRoute, useRouter } from 'vue-router';
-import { Icon } from './Icon';
-import s from './Overlay.module.scss';
-import { mePromise } from './me';
-import { Dialog } from 'vant';
+import { defineComponent, onMounted, PropType, ref } from 'vue'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { Icon } from './Icon'
+import s from './Overlay.module.scss'
+import { mePromise } from './me'
+import { Dialog } from 'vant'
 
 export const Overlay = defineComponent({
   props: {
     onClose: {
-      type: Function as PropType<() => void>,
-    },
+      type: Function as PropType<() => void>
+    }
   },
   setup: (props, context) => {
     const close = () => {
-      props.onClose?.();
-    };
-    const route = useRoute();
-    const router = useRouter();
-    const me = ref<User>();
+      props.onClose?.()
+    }
+    const route = useRoute()
+    const router = useRouter()
+    const me = ref<User>()
     const userName = (name: string) => {
-      return name.slice(0, name.indexOf('@'));
-    };
+      return name.slice(0, name.indexOf('@'))
+    }
     const onSignOut = async (e: Event) => {
-      e.preventDefault();
+      e.preventDefault()
       await Dialog.confirm({
-        message: '是否退出登录？',
-      });
-      localStorage.removeItem('jwt');
-      router.push('/sign_in');
-    };
+        message: '是否退出登录？'
+      })
+      localStorage.removeItem('jwt')
+      router.push('/sign_in')
+    }
     onMounted(async () => {
-      const response = await mePromise;
-      me.value = response?.data.resource;
-    });
+      const response = await mePromise
+      me.value = response?.data.resource
+    })
     return () => (
       <div>
         <div class={s.mask} onClick={close}></div>
@@ -42,7 +42,7 @@ export const Overlay = defineComponent({
               <div>
                 <div
                   onClick={() => {
-                    console.log('123');
+                    console.log('123')
                   }}
                 >
                   用户头像
@@ -80,6 +80,6 @@ export const Overlay = defineComponent({
           </nav>
         </div>
       </div>
-    );
-  },
-});
+    )
+  }
+})

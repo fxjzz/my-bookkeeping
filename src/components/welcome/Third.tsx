@@ -1,5 +1,5 @@
-import s from './welcome.module.scss';
-import { FunctionalComponent } from 'vue';
+import s from './welcome.module.scss'
+import { FunctionalComponent } from 'vue'
 
 export const Third: FunctionalComponent = () => {
   return (
@@ -13,7 +13,7 @@ export const Third: FunctionalComponent = () => {
         数据一目了然
       </h2>
     </div>
-  );
-};
+  )
+}
 
-Third.displayName = 'Third';
+Third.displayName = 'Third'

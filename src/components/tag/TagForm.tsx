@@ -1,71 +1,66 @@
-import { defineComponent, onMounted, reactive } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { Button } from '../../shared/Button';
-import { Form, FormItem } from '../../shared/Form';
-import { http } from '../../shared/Http';
-import { onFormError } from '../../shared/onFormError';
-import { hasError, Rules, validate } from '../../shared/validate';
-import s from './Tag.module.scss';
+import { defineComponent, onMounted, reactive } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { Button } from '../../shared/Button'
+import { Form, FormItem } from '../../shared/Form'
+import { http } from '../../shared/Http'
+import { onFormError } from '../../shared/onFormError'
+import { hasError, Rules, validate } from '../../shared/validate'
+import s from './Tag.module.scss'
 export const TagForm = defineComponent({
   props: {
-    id: Number,
+    id: Number
   },
   setup: (props, context) => {
-    const route = useRoute();
-    const router = useRouter();
+    const route = useRoute()
+    const router = useRouter()
     const formData = reactive({
       id: undefined,
       kind: route.query.kind!.toString(),
       name: '',
-      sign: '',
-    });
-    const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({});
+      sign: ''
+    })
+    const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({})
     const onSubmit = async (e: Event) => {
-      e.preventDefault();
+      e.preventDefault()
       const rules: Rules<typeof formData> = [
         { key: 'name', type: 'required', message: '必填' },
         {
           key: 'name',
           type: 'pattern',
           regex: /^.{1,4}$/,
-          message: '只能填 1 到 4 个字符',
+          message: '只能填 1 到 4 个字符'
         },
-        { key: 'sign', type: 'required', message: '必填' },
-      ];
+        { key: 'sign', type: 'required', message: '必填' }
+      ]
       Object.assign(errors, {
         name: [],
-        sign: [],
-      });
-      Object.assign(errors, validate(formData, rules));
+        sign: []
+      })
+      Object.assign(errors, validate(formData, rules))
       if (!hasError(errors)) {
         const promise = formData.id
           ? http.patch(`/tags/${formData.id}`, formData, {
-              params: { _mock: 'tagEdit' },
+              params: { _mock: 'tagEdit' }
             })
-          : http.post('/tags', formData, { params: { _mock: 'tagCreate' } });
+          : http.post('/tags', formData, { params: { _mock: 'tagCreate' } })
         await promise.catch((err) => {
-          onFormError(err, (data) => Object.assign(errors, data.errors));
-        });
-        router.back();
+          onFormError(err, (data) => Object.assign(errors, data.errors))
+        })
+        router.back()
       }
-    };
+    }
     onMounted(async () => {
       if (!props.id) {
-        return;
+        return
       }
       const response = await http.patch<Resource<Tag>>(`/tags/${props.id}`, {
-        _mock: 'tagShow',
-      });
-      Object.assign(formData, response.data.resource);
-    });
+        _mock: 'tagShow'
+      })
+      Object.assign(formData, response.data.resource)
+    })
     return () => (
       <Form onSubmit={onSubmit}>
-        <FormItem
-          label="标签名(最多4个字符)"
-          type="text"
-          v-model={formData.name}
-          error={errors['name']?.[0]}
-        />
+        <FormItem label="标签名(最多4个字符)" type="text" v-model={formData.name} error={errors['name']?.[0]} />
         <FormItem
           label={'符号 ' + formData.sign}
           type="emojiSelect"
@@ -81,6 +76,6 @@ export const TagForm = defineComponent({
           </Button>
         </FormItem>
       </Form>
-    );
-  },
-});
+    )
+  }
+})

@@ -1,9 +1,9 @@
-import { faker } from '@faker-js/faker';
-import { AxiosRequestConfig } from 'axios';
+import { faker } from '@faker-js/faker'
+import { AxiosRequestConfig } from 'axios'
 
-type Mock = (config: AxiosRequestConfig) => [number, any];
+type Mock = (config: AxiosRequestConfig) => [number, any]
 
-faker.setLocale('zh_CN');
+faker.setLocale('zh_CN')
 
 export const mockItemIndexBalance: Mock = (config) => {
   return [
@@ -11,10 +11,10 @@ export const mockItemIndexBalance: Mock = (config) => {
     {
       expenses: 9900,
       income: 9900,
-      balance: 0,
-    },
-  ];
-};
+      balance: 0
+    }
+  ]
+}
 
 export const mockItemSummary: Mock = (config) => {
   return [
@@ -23,29 +23,29 @@ export const mockItemSummary: Mock = (config) => {
       groups: [
         { happen_at: '2018-06-18T00:00:00.000+0800', amount: 100 },
         { happen_at: '2018-06-22T00:00:00.000+0800', amount: 300 },
-        { happen_at: '2018-06-29T00:00:00.000+0800', amount: 200 },
+        { happen_at: '2018-06-29T00:00:00.000+0800', amount: 200 }
       ],
-      summary: 600,
-    },
-  ];
-};
+      summary: 600
+    }
+  ]
+}
 
 export const mockItemIndex: Mock = (config) => {
-  const { kind, page } = config.params;
-  const per_page = 25;
-  const count = 26;
+  const { kind, page } = config.params
+  const per_page = 25
+  const count = 26
   const createPaper = (page = 1) => ({
     page,
     per_page,
-    count,
-  });
+    count
+  })
   const createTag = (attrs?: any) => ({
     id: createId(),
     name: faker.lorem.word(),
     sign: faker.internet.emoji(),
     kind: 'expenses',
-    ...attrs,
-  });
+    ...attrs
+  })
   const createItem = (n = 1, attrs?: any) =>
     Array.from({ length: n }).map(() => ({
       id: createId(),
@@ -54,8 +54,8 @@ export const mockItemIndex: Mock = (config) => {
       tags_id: [createId()],
       happen_at: faker.date.past().toISOString(),
       kind: config.params.kind,
-      tags: [createTag()],
-    }));
+      tags: [createTag()]
+    }))
 
   const createBody = (n = 1, attrs?: any) => ({
     resources: createItem(n),
@@ -63,18 +63,18 @@ export const mockItemIndex: Mock = (config) => {
     summary: {
       income: 9900,
       expenses: 9900,
-      balance: 0,
-    },
-  });
+      balance: 0
+    }
+  })
 
   if (!page || page === 1) {
-    return [200, createBody(25)];
+    return [200, createBody(25)]
   } else if (page === 2) {
-    return [200, createBody(1)];
+    return [200, createBody(1)]
   } else {
-    return [200, {}];
+    return [200, {}]
   }
-};
+}
 
 export const mockTagEdit: Mock = (config) => {
   const createTag = (attrs?: any) => ({
@@ -82,10 +82,10 @@ export const mockTagEdit: Mock = (config) => {
     name: faker.lorem.word(),
     sign: faker.internet.emoji(),
     kind: 'expenses',
-    ...attrs,
-  });
-  return [200, { resource: createTag() }];
-};
+    ...attrs
+  })
+  return [200, { resource: createTag() }]
+}
 
 export const mockTagShow: Mock = (config) => {
   const createTag = (attrs?: any) => ({
@@ -93,59 +93,59 @@ export const mockTagShow: Mock = (config) => {
     name: faker.lorem.word(),
     sign: faker.internet.emoji(),
     kind: 'expenses',
-    ...attrs,
-  });
-  return [200, { resource: createTag() }];
-};
+    ...attrs
+  })
+  return [200, { resource: createTag() }]
+}
 
 export const mockSession: Mock = (config) => {
   return [
     200,
     {
-      jwt: faker.random.word(),
-    },
-  ];
-};
+      jwt: faker.random.word()
+    }
+  ]
+}
 
-let id = 0;
+let id = 0
 const createId = () => {
-  id += 1;
-  return id;
-};
+  id += 1
+  return id
+}
 
 export const mockTagIndex: Mock = (config) => {
-  const { kind, page } = config.params;
-  const per_page = 25;
-  const count = 26;
+  const { kind, page } = config.params
+  const per_page = 25
+  const count = 26
   const createPager = (page = 1) => ({
     page,
     per_page,
-    count,
-  });
+    count
+  })
   const createTag = (n = 1, attrs?: any) =>
     Array.from({ length: n }).map(() => ({
       id: createId(),
       name: faker.lorem.word(),
       sign: faker.internet.emoji(),
       kind: config.params.kind,
-      ...attrs,
-    }));
+      ...attrs
+    }))
   const createBody = (n = 1, attrs?: any) => ({
     resources: createTag(n),
-    pager: createPager(page),
-  });
+    pager: createPager(page)
+  })
   if (kind === 'expenses' && (!page || page === 1)) {
-    return [200, createBody(25)];
+    return [200, createBody(25)]
   } else if (kind === 'expenses' && page === 2) {
-    return [200, createBody(1)];
+    return [200, createBody(1)]
   } else if (kind === 'income' && (!page || page === 1)) {
-    return [200, createBody(25)];
+    return [200, createBody(25)]
   } else if (kind === 'income' && page === 2) {
-    return [200, createBody(1)];
+    return [200, createBody(1)]
   } else {
-    return [200, { resources: createTag(1) }];
+    return [200, { resources: createTag(1) }]
   }
-};
+}
 
 export const mockItemCreate: Mock = (config) => {
   return [
@@ -160,8 +160,8 @@ export const mockItemCreate: Mock = (config) => {
         happen_at: '2020-10-29T16:00:00.000Z',
         created_at: '2022-07-03T15:35:56.301Z',
         updated_at: '2022-07-03T15:35:56.301Z',
-        kind: 'expenses',
-      },
-    },
-  ];
-};
+        kind: 'expenses'
+      }
+    }
+  ]
+}

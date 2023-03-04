@@ -2,11 +2,7 @@
   height: calc(100vh - var(--welcome-nav-height));
   display: flex;
   flex-direction: column;
-  background-image: linear-gradient(
-    to bottom,
-    var(--welcome-bg-start) 0%,
-    var(--welcome-bg-end) 100%
-  );
+  background-image: linear-gradient(to bottom, var(--welcome-bg-start) 0%, var(--welcome-bg-end) 100%);
   > header {
     flex-shrink: 0;
     display: flex;

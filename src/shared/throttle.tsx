@@ -1,13 +1,13 @@
 export const throttle = (fn: Function, time: number) => {
-  let timer: number | null = null;
+  let timer: number | null = null
   return () => {
     if (timer) {
-      return;
+      return
     } else {
-      fn();
+      fn()
       timer = setTimeout(() => {
-        timer = null;
-      }, time);
+        timer = null
+      }, time)
     }
-  };
-};
+  }
+}

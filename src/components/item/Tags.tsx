@@ -1,60 +1,52 @@
-import { defineComponent, PropType, ref } from 'vue';
-import { RouterLink, useRoute, useRouter } from 'vue-router';
-import { Button } from '../../shared/Button';
-import { http } from '../../shared/Http';
-import { Icon } from '../../shared/Icon';
-import { useTags } from '../../shared/useTags';
-import s from './Tags.module.scss';
+import { defineComponent, PropType, ref } from 'vue'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { Button } from '../../shared/Button'
+import { http } from '../../shared/Http'
+import { Icon } from '../../shared/Icon'
+import { useTags } from '../../shared/useTags'
+import s from './Tags.module.scss'
 export const Tags = defineComponent({
   props: {
     kind: {
       type: String as PropType<string>,
-      required: true,
+      required: true
     },
-    selected: Number,
+    selected: Number
   },
   emits: ['update:selected'],
   setup: (props, context) => {
-    const route = useRoute();
-    const router = useRouter();
+    const route = useRoute()
+    const router = useRouter()
     const { tags, hasMore, fetchTags } = useTags((page) => {
       return http.get<Resources<Tag>>('/tags', {
         kind: props.kind,
         page: page + 1,
-        _mock: 'tagIndex',
-      });
-    });
+        _mock: 'tagIndex'
+      })
+    })
     const onSelect = (tag: Tag) => {
-      context.emit('update:selected', tag.id);
-    };
-    const timer = ref<number>();
-    const currentTag = ref<HTMLDivElement>();
+      context.emit('update:selected', tag.id)
+    }
+    const timer = ref<number>()
+    const currentTag = ref<HTMLDivElement>()
     const onLongPress = (id: number) => {
-      router.push(
-        `/tags/${id}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`
-      );
-    };
+      router.push(`/tags/${id}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`)
+    }
     const onTouchStart = (tag: Tag, e: TouchEvent) => {
-      currentTag.value = e.currentTarget as HTMLDivElement;
+      currentTag.value = e.currentTarget as HTMLDivElement
       timer.value = setTimeout(() => {
-        onLongPress(tag.id);
-      }, 500);
-    };
+        onLongPress(tag.id)
+      }, 500)
+    }
     const onTouchEnd = (e: TouchEvent) => {
-      clearTimeout(timer.value);
-    };
+      clearTimeout(timer.value)
+    }
     const onTouchMove = (e: TouchEvent) => {
-      const pointedEl = document.elementFromPoint(
-        e.touches[0].clientX,
-        e.touches[0].clientY
-      );
-      if (
-        currentTag.value !== pointedEl &&
-        currentTag.value?.contains(pointedEl) === false
-      ) {
-        clearTimeout(timer.value);
+      const pointedEl = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY)
+      if (currentTag.value !== pointedEl && currentTag.value?.contains(pointedEl) === false) {
+        clearTimeout(timer.value)
       }
-    };
+    }
     return () => (
       <>
         <div class={s.tags_wrapper} onTouchmove={onTouchMove}>
@@ -86,6 +78,6 @@ export const Tags = defineComponent({
           )}
         </div>
       </>
-    );
-  },
-});
+    )
+  }
+})

@@ -1,5 +1,5 @@
-import s from './welcome.module.scss';
-import { FunctionalComponent } from 'vue';
+import s from './welcome.module.scss'
+import { FunctionalComponent } from 'vue'
 
 export const Forth: FunctionalComponent = () => {
   return (
@@ -13,7 +13,7 @@ export const Forth: FunctionalComponent = () => {
         不遗漏每一笔账单
       </h2>
     </div>
-  );
-};
+  )
+}
 
-Forth.displayName = 'Forth';
+Forth.displayName = 'Forth'

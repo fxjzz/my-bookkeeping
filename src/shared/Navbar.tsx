@@ -1,18 +1,18 @@
-import { defineComponent, PropType } from 'vue';
-import s from './Navbar.module.scss';
+import { defineComponent, PropType } from 'vue'
+import s from './Navbar.module.scss'
 export const Navbar = defineComponent({
   props: {
     name: {
-      type: String as PropType<string>,
-    },
+      type: String as PropType<string>
+    }
   },
   setup: (props, context) => {
-    const { slots } = context;
+    const { slots } = context
     return () => (
       <div class={s.navbar}>
         <span class={s.icon_wrapper}>{slots.icon?.(s.icon)}</span>
         <span class={s.title_wrapper}>{slots.title?.(s.title)}</span>
       </div>
-    );
-  },
-});
+    )
+  }
+})

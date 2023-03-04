@@ -1,40 +1,35 @@
-import { defineComponent, reactive, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useBool } from '../hooks/useBool';
-import { MainLayout } from '../layout/MainLayout';
-import { BackIcon } from '../shared/BackIcon';
-import { Button } from '../shared/Button';
-import { Form, FormItem } from '../shared/Form';
-import { http } from '../shared/Http';
-import { Icon } from '../shared/Icon';
-import { refreshMe } from '../shared/me';
-import { hasError, validate } from '../shared/validate';
-import s from './SignInPage.module.scss';
+import { defineComponent, reactive, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useBool } from '../hooks/useBool'
+import { MainLayout } from '../layout/MainLayout'
+import { BackIcon } from '../shared/BackIcon'
+import { Button } from '../shared/Button'
+import { Form, FormItem } from '../shared/Form'
+import { http } from '../shared/Http'
+import { Icon } from '../shared/Icon'
+import { refreshMe } from '../shared/me'
+import { hasError, validate } from '../shared/validate'
+import s from './SignInPage.module.scss'
 export const SignInPage = defineComponent({
   setup: (props, context) => {
-    const router = useRouter();
-    const route = useRoute();
+    const router = useRouter()
+    const route = useRoute()
     const formData = reactive({
       email: '',
-      code: '',
-    });
+      code: ''
+    })
     const errors = reactive({
       email: [],
-      code: [],
-    });
-    const refValidationCode = ref<any>();
-    const {
-      ref: refDisabled,
-      toggle,
-      on: disabled,
-      off: enable,
-    } = useBool(false);
+      code: []
+    })
+    const refValidationCode = ref<any>()
+    const { ref: refDisabled, toggle, on: disabled, off: enable } = useBool(false)
     const onSubmit = async (e: Event) => {
-      e.preventDefault();
+      e.preventDefault()
       Object.assign(errors, {
         email: [],
-        code: [],
-      });
+        code: []
+      })
       Object.assign(
         errors,
         validate(formData, [
@@ -43,37 +38,32 @@ export const SignInPage = defineComponent({
             key: 'email',
             type: 'pattern',
             regex: /.+@.+/,
-            message: '必须是邮箱地址',
+            message: '必须是邮箱地址'
           },
-          { key: 'code', type: 'required', message: '必填' },
+          { key: 'code', type: 'required', message: '必填' }
         ])
-      );
+      )
       if (!hasError(errors)) {
-        const response = await http
-          .post<{ jwt: string }>('/session', formData)
-          .catch(onError);
-        localStorage.setItem('jwt', response.data.jwt);
+        const response = await http.post<{ jwt: string }>('/session', formData).catch(onError)
+        localStorage.setItem('jwt', response.data.jwt)
         // router.push('/sign_in?return_to='+ encodeURIComponent(route.fullPath))
-        const returnTo = route.query.return_to?.toString();
-        refreshMe();
-        router.push(returnTo || '/');
+        const returnTo = route.query.return_to?.toString()
+        refreshMe()
+        router.push(returnTo || '/')
       }
-    };
+    }
     const onError = (error: any) => {
       if (error.response.status === 422) {
-        Object.assign(errors, error.response.data.errors);
+        Object.assign(errors, error.response.data.errors)
       }
-      throw error;
-    };
+      throw error
+    }
     const onClickSendValidationCode = async () => {
-      disabled();
-      const response = await http
-        .post('/validation_codes', { email: formData.email })
-        .catch(onError)
-        .finally(enable);
+      disabled()
+      const response = await http.post('/validation_codes', { email: formData.email }).catch(onError).finally(enable)
       //成功
-      refValidationCode.value.startCount();
-    };
+      refValidationCode.value.startCount()
+    }
     return () => (
       <MainLayout>
         {{
@@ -108,9 +98,9 @@ export const SignInPage = defineComponent({
                 </FormItem>
               </Form>
             </div>
-          ),
+          )
         }}
       </MainLayout>
-    );
-  },
-});
+    )
+  }
+})

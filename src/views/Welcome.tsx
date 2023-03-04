@@ -1,36 +1,31 @@
-import { defineComponent, ref, Transition, VNode, watchEffect } from 'vue';
-import {
-  RouteLocationNormalizedLoaded,
-  RouterView,
-  useRoute,
-  useRouter,
-} from 'vue-router';
-import { useSwipe } from '../hooks/useSwipe';
-import { throttle } from '../shared/throttle';
-import s from './Welcome.module.scss';
+import { defineComponent, ref, Transition, VNode, watchEffect } from 'vue'
+import { RouteLocationNormalizedLoaded, RouterView, useRoute, useRouter } from 'vue-router'
+import { useSwipe } from '../hooks/useSwipe'
+import { throttle } from '../shared/throttle'
+import s from './Welcome.module.scss'
 
 const pushMap: Record<string, string> = {
   Welcome1: '/welcome/2',
   Welcome2: '/welcome/3',
-  Welcome3: '/welcome/4',
-};
+  Welcome3: '/welcome/4'
+}
 export const Welcome = defineComponent({
   setup: (props, context) => {
-    const main = ref<HTMLElement>();
+    const main = ref<HTMLElement>()
     const { direction, distance, swiping } = useSwipe(main, {
-      beforeStart: (e) => e.preventDefault(),
-    });
-    const route = useRoute();
-    const router = useRouter();
+      beforeStart: (e) => e.preventDefault()
+    })
+    const route = useRoute()
+    const router = useRouter()
     const replace = throttle(() => {
-      const name = (route.name || 'Welcome1').toString();
-      router.replace(pushMap[name]);
-    }, 500);
+      const name = (route.name || 'Welcome1').toString()
+      router.replace(pushMap[name])
+    }, 500)
     watchEffect(() => {
       if (swiping && direction.value === 'left') {
-        replace();
+        replace()
       }
-    });
+    })
     return () => (
       <div class={s.wrapper}>
         <header>
@@ -41,13 +36,7 @@ export const Welcome = defineComponent({
         </header>
         <main class={s.main} ref={main}>
           <RouterView name="main">
-            {({
-              Component: X,
-              route: R,
-            }: {
-              Component: VNode;
-              route: RouteLocationNormalizedLoaded;
-            }) => (
+            {({ Component: X, route: R }: { Component: VNode; route: RouteLocationNormalizedLoaded }) => (
               <Transition
                 enterFromClass={s.slide_fade_enter_from}
                 enterActiveClass={s.slide_fade_enter_active}
@@ -63,6 +52,6 @@ export const Welcome = defineComponent({
           <RouterView name="footer" />
         </footer>
       </div>
-    );
-  },
-});
+    )
+  }
+})
