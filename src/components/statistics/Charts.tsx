@@ -42,16 +42,6 @@ export const Charts = defineComponent({
         return [new Date(time).toISOString(), amount]
       })
     })
-    onMounted(async () => {
-      const response = await http.get<{ groups: Data1; summary: Number }>('/items/summary', {
-        happen_after: props.startDate,
-        happen_before: props.endDate,
-        kind: kind.value,
-        group_by: 'happen_at',
-        _mock: 'itemSummary'
-      })
-      originalData.value = response.data.groups
-    })
     const data2 = ref<Data2>([])
     const betterData2 = computed<{ name: string; value: number }[]>(() =>
       data2.value.map((item) => ({
@@ -66,7 +56,17 @@ export const Charts = defineComponent({
         percent: Math.round((item.amount / total) * 100)
       }))
     })
-    onMounted(async () => {
+    const fetchData1 = async () => {
+      const response = await http.get<{ groups: Data1; summary: Number }>('/items/summary', {
+        happen_after: props.startDate,
+        happen_before: props.endDate,
+        kind: kind.value,
+        group_by: 'happen_at',
+        _mock: 'itemSummary'
+      })
+      originalData.value = response.data.groups
+    }
+    const fetchData2 = async () => {
       const response = await http.get<{ groups: Data2; summary: number }>('/items/summary', {
         happen_after: props.startDate,
         happen_before: props.endDate,
@@ -75,7 +75,17 @@ export const Charts = defineComponent({
         _mock: 'itemSummary'
       })
       data2.value = response.data.groups
-    })
+    }
+    onMounted(fetchData1)
+    onMounted(fetchData2)
+    watch(
+      () => kind.value,
+      () => {
+        fetchData1()
+        fetchData2()
+      }
+    )
+
     return () => (
       <div class={s.wrapper}>
         <FormItem
@@ -87,6 +97,7 @@ export const Charts = defineComponent({
           ]}
           v-model={kind.value}
         />
+        {kind.value}
         <LineChart data={lineData.value} />
         <PieChart data={betterData2.value} />
         <Bars data={betterData3.value} />
