@@ -101,7 +101,7 @@ export const Charts = defineComponent({
 
     return () => (
       <div class={s.wrapper}>
-        {originalData.value.length > 0 ? (
+        {lineData.value[1] ? (
           <>
             <FormItem
               label="类型"
