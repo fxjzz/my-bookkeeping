@@ -125,6 +125,7 @@ export const InputPad = defineComponent({
                 title="选择年月日"
                 onConfirm={setDate}
                 onCancel={hideDatePicker}
+                v-model:happenAt={props.happenAt}
               />
             </Popup>
           </span>

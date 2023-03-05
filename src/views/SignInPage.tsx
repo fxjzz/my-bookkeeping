@@ -1,3 +1,4 @@
+import { Toast } from 'vant'
 import { defineComponent, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useBool } from '../hooks/useBool'
@@ -44,7 +45,7 @@ export const SignInPage = defineComponent({
         ])
       )
       if (!hasError(errors)) {
-        const response = await http.post<{ jwt: string }>('/session', formData).catch(onError)
+        const response = await http.post<{ jwt: string }>('/session', formData, { _autoLoading: true }).catch(onError)
         localStorage.setItem('jwt', response.data.jwt)
         // router.push('/sign_in?return_to='+ encodeURIComponent(route.fullPath))
         const returnTo = route.query.return_to?.toString()
@@ -59,8 +60,26 @@ export const SignInPage = defineComponent({
       throw error
     }
     const onClickSendValidationCode = async () => {
+      Object.assign(errors, {
+        email: []
+      })
+      Object.assign(
+        errors,
+        validate(formData, [
+          { key: 'email', type: 'required', message: '请输入邮箱地址!' },
+          {
+            key: 'email',
+            type: 'pattern',
+            regex: /.+@.+/,
+            message: '邮箱格式不正确!'
+          }
+        ])
+      )
       disabled()
-      const response = await http.post('/validation_codes', { email: formData.email }).catch(onError).finally(enable)
+      await http
+        .post('/validation_codes', { email: formData.email }, { _autoLoading: true })
+        .catch(onError)
+        .finally(enable)
       //成功
       refValidationCode.value.startCount()
     }

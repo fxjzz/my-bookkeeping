@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { Toast } from 'vant'
 import {
   mockSession,
   mockTagIndex,
@@ -50,7 +51,7 @@ const mock = (response: AxiosResponse) => {
   if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && location.hostname !== '192.168.3.57') {
     return false
   }
-  switch (response.config?.params?._mock) {
+  switch (response.config._mock) {
     case 'tagIndex':
       ;[response.status, response.data] = mockTagIndex(response.config)
       return true
@@ -92,8 +93,30 @@ http.instance.interceptors.request.use((config) => {
   if (jwt) {
     config.headers!.Authorization = `Bearer ${jwt}` //让请求头里有jwt
   }
+  if (config._autoLoading === true) {
+    Toast.loading({
+      message: '加载中...',
+      forbidClick: true,
+      duration: 0
+    })
+  }
   return config
 })
+//拦截器 响应后 删除加载框。
+http.instance.interceptors.response.use(
+  (response) => {
+    if (response.config._autoLoading === true) {
+      Toast.clear()
+    }
+    return response
+  },
+  (err: AxiosError) => {
+    if (err.config._autoLoading === true) {
+      Toast.clear()
+    }
+    throw err
+  }
+)
 
 http.instance.interceptors.response.use(
   (response) => {
