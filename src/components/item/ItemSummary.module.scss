@@ -1,5 +1,5 @@
 .wrapper {
-  height: 100vh;
+  height: 80vh;
 }
 .total {
   background: var(--total-bg);
@@ -67,4 +67,11 @@
   padding-top: 32px;
   text-align: center;
   height: 100px;
+}
+
+.p {
+  width: 100vw;
+}
+.center {
+  margin-top: 220px;
 }

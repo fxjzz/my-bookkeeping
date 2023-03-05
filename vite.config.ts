@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import * as path from 'path'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import styleImport, { VantResolve } from 'vite-plugin-style-import'
@@ -24,6 +25,11 @@ export default defineConfig({
       '/api/v1': {
         target: 'http://121.196.236.94:3000/'
       }
+    }
+  },
+  resolve: {
+    alias: {
+      '@images': path.join(__dirname, 'src/assets/images')
     }
   }
 })

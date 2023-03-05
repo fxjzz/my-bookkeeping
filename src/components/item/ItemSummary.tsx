@@ -6,6 +6,8 @@ import { FloatButton } from '../../shared/FloatButton'
 import { http } from '../../shared/Http'
 import { Money } from '../../shared/Money'
 import s from './ItemSummary.module.scss'
+import p from '@images/picture.png'
+
 export const ItemSummary = defineComponent({
   props: {
     startDate: {
@@ -78,7 +80,7 @@ export const ItemSummary = defineComponent({
     onMounted(fetchItemsBalance)
     return () => (
       <div class={s.wrapper}>
-        {items.value ? (
+        {items.value.length > 0 ? (
           <>
             <ul class={s.total}>
               <li>
@@ -119,7 +121,9 @@ export const ItemSummary = defineComponent({
             </div>
           </>
         ) : (
-          <div>暂无数据</div>
+          <div class={s.center}>
+            <img src={p} class={s.p} />
+          </div>
         )}
         <RouterLink to={'/items/create'}>
           <FloatButton />
