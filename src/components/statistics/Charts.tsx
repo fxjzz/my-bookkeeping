@@ -6,6 +6,7 @@ import { LineChart } from './LineChart'
 import { PieChart } from './PieChart'
 import { http } from '../../shared/Http'
 import { Time } from '../../shared/time'
+import { Img } from '../../shared/img'
 
 type DataItem = { happen_at: string; amount: number }
 type Data1 = DataItem[]
@@ -100,18 +101,24 @@ export const Charts = defineComponent({
 
     return () => (
       <div class={s.wrapper}>
-        <FormItem
-          label="类型"
-          type="select"
-          options={[
-            { value: 'expenses', text: '支出' },
-            { value: 'income', text: '收入' }
-          ]}
-          v-model={kind.value}
-        />
-        <LineChart data={lineData.value} />
-        <PieChart data={betterData2.value} />
-        <Bars data={betterData3.value} />
+        {originalData.value.length > 0 ? (
+          <>
+            <FormItem
+              label="类型"
+              type="select"
+              options={[
+                { value: 'expenses', text: '支出' },
+                { value: 'income', text: '收入' }
+              ]}
+              v-model={kind.value}
+            />
+            <LineChart data={lineData.value} />
+            <PieChart data={betterData2.value} />
+            <Bars data={betterData3.value} />
+          </>
+        ) : (
+          <Img />
+        )}
       </div>
     )
   }
