@@ -1,4 +1,5 @@
 import { defineComponent, onMounted, PropType, reactive, ref, watch } from 'vue'
+import { RouterLink } from 'vue-router'
 import { Button } from '../../shared/Button'
 import { Datetime } from '../../shared/DateTime'
 import { FloatButton } from '../../shared/FloatButton'
@@ -120,7 +121,9 @@ export const ItemSummary = defineComponent({
         ) : (
           <div>暂无数据</div>
         )}
-        <FloatButton />
+        <RouterLink to={'/items/create'}>
+          <FloatButton />
+        </RouterLink>
       </div>
     )
   }
