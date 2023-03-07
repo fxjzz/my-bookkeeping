@@ -41,7 +41,9 @@ export const Overlay = defineComponent({
             {me.value ? (
               <div>
                 <h2>您好！{userName(me.value.email)}</h2>
-                <p onClick={onSignOut}>退出登录</p>
+                <p onClick={onSignOut}>
+                  <Icon name="out" class={s.out} />
+                </p>
               </div>
             ) : (
               <RouterLink to={`/sign_in?return?${route.fullPath}`}>
