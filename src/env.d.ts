@@ -33,9 +33,9 @@ type Item = {
   id: number
   user_id: number
   amount: number
-  tags_id: number[]
+  tag_ids: number[]
   happen_at: string
-  kind: expenses | income
+  kind: 'expenses' | 'income'
   tags: Tag[]
 }
 
@@ -47,3 +47,5 @@ type User = {
   id: number
   email: string
 }
+
+type FormErrors<T> = { [K in keyof typeof T]: string[] }

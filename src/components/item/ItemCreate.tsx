@@ -6,6 +6,7 @@ import { MainLayout } from '../../layout/MainLayout'
 import { BackIcon } from '../../shared/BackIcon'
 import { http } from '../../shared/Http'
 import { Tab, Tabs } from '../../shared/Tabs'
+import { hasError, validate } from '../../shared/validate'
 import { InputPad } from './InputPad'
 import s from './ItemCreate.module.scss'
 import { Tags } from './Tags'
@@ -16,12 +17,13 @@ export const ItemCreate = defineComponent({
     }
   },
   setup: (props, context) => {
-    const formData = reactive({
-      kind: '支出',
-      tag_id: 0,
+    const formData = reactive<Partial<Item>>({
+      kind: 'expenses',
+      tag_ids: [],
       amount: 0,
       happen_at: new Date().toISOString()
     })
+    const errors = reactive<FormErrors<typeof formData>>({ kind: [], tag_ids: [], amount: [], happen_at: [] })
     const router = useRouter()
     const onError = (error: AxiosError<ResourceError>) => {
       if (error.response?.status === 422) {
@@ -33,9 +35,24 @@ export const ItemCreate = defineComponent({
       throw error
     }
     const onSubmit = async () => {
-      const response = await http
-        .post<Resource<Item>>('/items', formData, { _mock: 'itemCreate', _autoLoading: true })
-        .catch(onError)
+      Object.assign(errors, { kind: [], tag_ids: [], amount: [], happen_at: [] })
+      Object.assign(
+        errors,
+        validate(formData, [
+          { key: 'tag_ids', type: 'required', message: '请选择标签' },
+          { key: 'amount', type: 'notEqual', value: 0, message: '金额不能为零' }
+        ])
+      )
+      if (hasError(errors)) {
+        Dialog.alert({
+          title: '出错了',
+          message: Object.values(errors)
+            .filter((i) => i.length > 0)
+            .join('\n')
+        })
+        return
+      }
+      await http.post<Resource<Item>>('/items', formData, { _mock: 'itemCreate', _autoLoading: true }).catch(onError)
       router.push('/items')
     }
     return () => (
@@ -47,11 +64,11 @@ export const ItemCreate = defineComponent({
             <>
               <div class={s.wrapper}>
                 <Tabs v-model:selected={formData.kind} class={s.tabs}>
-                  <Tab name="支出">
-                    <Tags kind="expenses" v-model:selected={formData.tag_id} />
+                  <Tab value="expenses" name="支出">
+                    <Tags kind="expenses" v-model:selected={formData.tag_ids![0]} />
                   </Tab>
-                  <Tab name="收入">
-                    <Tags kind="income" v-model:selected={formData.tag_id} />
+                  <Tab value="income" name="收入">
+                    <Tags kind="income" v-model:selected={formData.tag_ids![0]} />
                   </Tab>
                 </Tabs>
                 <div class={s.inputPad_wrapper}>
