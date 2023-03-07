@@ -7,6 +7,7 @@ import { http } from '../../shared/Http'
 import { Money } from '../../shared/Money'
 import s from './ItemSummary.module.scss'
 import p from '@images/picture.png'
+import { useAfterMe } from '../../hooks/useAfterMe'
 
 export const ItemSummary = defineComponent({
   props: {
@@ -56,7 +57,7 @@ export const ItemSummary = defineComponent({
       hasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
       page.value += 1
     }
-    onMounted(fetchItems)
+    useAfterMe(fetchItems)
     watch(
       () => [props.startDate, props.endDate],
       () => {
@@ -77,7 +78,7 @@ export const ItemSummary = defineComponent({
       income: 0,
       balance: 0
     })
-    onMounted(fetchItemsBalance)
+    useAfterMe(fetchItemsBalance)
     return () => (
       <div class={s.wrapper}>
         {items.value.length > 0 ? (
