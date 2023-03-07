@@ -33,7 +33,7 @@ export const Tags = defineComponent({
     const onSelect = (tag: Tag) => {
       context.emit('update:selected', tag.id)
     }
-    const timer = ref<number>()
+    const timer = ref<any>()
     const currentTag = ref<HTMLDivElement>()
     const onLongPress = (id: number) => {
       router.push(`/tags/${id}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`)

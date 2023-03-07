@@ -1,5 +1,5 @@
 export const throttle = (fn: Function, time: number) => {
-  let timer: number | null = null
+  let timer: any = null
   return () => {
     if (timer) {
       return

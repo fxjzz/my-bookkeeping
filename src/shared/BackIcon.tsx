@@ -14,7 +14,7 @@ export const BackIcon = defineComponent({
     const router = useRouter()
     const onClick = () => {
       const { return_to } = route.query
-      if (return_to) {
+      if (return_to && return_to !== '/items/create') {
         router.push(return_to.toString())
       } else {
         router.back()

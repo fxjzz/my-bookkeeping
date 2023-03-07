@@ -46,7 +46,7 @@ export const FormItem = defineComponent({
   emits: ['update:modelValue'],
   setup: (props, context) => {
     const refDateVisible = ref(false)
-    const timer = ref<number>()
+    const timer = ref<any>()
     const count = ref<number>(props.countFrom)
     const isCounting = computed(() => !!timer.value)
     const startCount = () =>

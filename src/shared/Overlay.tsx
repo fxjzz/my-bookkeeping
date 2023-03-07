@@ -40,13 +40,6 @@ export const Overlay = defineComponent({
           <section class={s.currentUser}>
             {me.value ? (
               <div>
-                <div
-                  onClick={() => {
-                    console.log('123')
-                  }}
-                >
-                  用户头像
-                </div>
                 <h2>您好！{userName(me.value.email)}</h2>
                 <p onClick={onSignOut}>退出登录</p>
               </div>
