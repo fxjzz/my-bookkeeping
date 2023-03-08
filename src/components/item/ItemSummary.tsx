@@ -37,7 +37,13 @@ export const ItemSummary = defineComponent({
       )
       Object.assign(itemsBalance, response.data)
     }
+    const itemsBalance = reactive({
+      expenses: 0,
+      income: 0,
+      balance: 0
+    })
     useAfterMe(() => itemStore.fetchItems(props.startDate, props.endDate))
+    useAfterMe(fetchItemsBalance)
     watch(
       () => [props.startDate, props.endDate],
       () => {
@@ -51,12 +57,6 @@ export const ItemSummary = defineComponent({
         fetchItemsBalance()
       }
     )
-    const itemsBalance = reactive({
-      expenses: 0,
-      income: 0,
-      balance: 0
-    })
-    useAfterMe(fetchItemsBalance)
     return () => (
       <div class={s.wrapper}>
         {itemStore.items.length > 0 ? (
@@ -97,7 +97,7 @@ export const ItemSummary = defineComponent({
             </ol>
             <div class={s.more}>
               {itemStore.hasMore ? (
-                <Button onClick={() => itemStore.fetchItems()}>加载更多</Button>
+                <Button onClick={() => itemStore.fetchNextPage()}>加载更多</Button>
               ) : (
                 <span>没有了</span>
               )}
