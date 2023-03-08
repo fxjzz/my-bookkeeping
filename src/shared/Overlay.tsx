@@ -31,7 +31,7 @@ export const Overlay = defineComponent({
       router.push('/sign_in')
     }
     onMounted(async () => {
-      const response = await meStore.mePromise
+      const response = await meStore.mePromise!.catch(() => undefined)
       me.value = response?.data.resource
     })
     return () => (
@@ -42,7 +42,8 @@ export const Overlay = defineComponent({
             {me.value ? (
               <div>
                 <h2>您好！{userName(me.value.email)}</h2>
-                <p onClick={onSignOut}>
+                <p onClick={onSignOut} class={s.p}>
+                  登出
                   <Icon name="out" class={s.out} />
                 </p>
               </div>
