@@ -8,6 +8,7 @@ import { Money } from '../../shared/Money'
 import s from './ItemSummary.module.scss'
 import p from '@images/picture.png'
 import { useAfterMe } from '../../hooks/useAfterMe'
+import { useItemStore } from '../../stores/useItemStore'
 
 export const ItemSummary = defineComponent({
   props: {
@@ -19,9 +20,7 @@ export const ItemSummary = defineComponent({
     }
   },
   setup: (props, context) => {
-    const items = ref<Item[]>([])
-    const hasMore = ref(false)
-    const page = ref(0)
+    const itemStore = useItemStore(props.startDate, props.endDate)
     const fetchItemsBalance = async () => {
       if (!props.startDate || !props.endDate) return
       const response = await http.get(
@@ -29,7 +28,7 @@ export const ItemSummary = defineComponent({
         {
           happen_after: props.startDate,
           happen_before: props.endDate,
-          page: page.value + 1
+          page: itemStore.page + 1
         },
         {
           _mock: 'itemIndexBalance',
@@ -38,33 +37,12 @@ export const ItemSummary = defineComponent({
       )
       Object.assign(itemsBalance, response.data)
     }
-    const fetchItems = async () => {
-      if (!props.startDate || !props.endDate) return
-      const response = await http.get<Resources<Item>>(
-        '/items',
-        {
-          happen_after: props.startDate,
-          happen_before: props.endDate,
-          page: page.value + 1
-        },
-        {
-          _mock: 'itemIndex',
-          _autoLoading: true
-        }
-      )
-      const { resources, pager } = response.data
-      items.value?.push(...resources)
-      hasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
-      page.value += 1
-    }
-    useAfterMe(fetchItems)
+    useAfterMe(() => itemStore.fetchItems(props.startDate, props.endDate))
     watch(
       () => [props.startDate, props.endDate],
       () => {
-        items.value = []
-        hasMore.value = false
-        page.value = 0
-        fetchItems()
+        itemStore.reset()
+        itemStore.fetchItems()
         Object.assign(itemsBalance, {
           expenses: 0,
           income: 0,
@@ -81,7 +59,7 @@ export const ItemSummary = defineComponent({
     useAfterMe(fetchItemsBalance)
     return () => (
       <div class={s.wrapper}>
-        {items.value.length > 0 ? (
+        {itemStore.items.length > 0 ? (
           <>
             <ul class={s.total}>
               <li>
@@ -98,7 +76,7 @@ export const ItemSummary = defineComponent({
               </li>
             </ul>
             <ol class={s.list}>
-              {items.value.map((item) => (
+              {itemStore.items.map((item) => (
                 <li>
                   <div class={s.sign}>
                     <span>{item.tags![0].sign}</span>
@@ -118,7 +96,11 @@ export const ItemSummary = defineComponent({
               ))}
             </ol>
             <div class={s.more}>
-              {hasMore.value ? <Button onClick={fetchItems}>加载更多</Button> : <span>没有了</span>}
+              {itemStore.hasMore ? (
+                <Button onClick={() => itemStore.fetchItems()}>加载更多</Button>
+              ) : (
+                <span>没有了</span>
+              )}
             </div>
           </>
         ) : (
