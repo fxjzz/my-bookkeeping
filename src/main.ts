@@ -30,7 +30,7 @@ router.beforeEach((to, from) => {
   } else {
     return meStore.mePromise!.then(
       () => true,
-      () => '/sign_in?return_to=' + to.path
+      () => '/sign_in?return_to=' + from.path
     )
   }
 })
