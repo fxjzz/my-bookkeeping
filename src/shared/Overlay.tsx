@@ -28,11 +28,18 @@ export const Overlay = defineComponent({
         message: '是否退出登录？'
       })
       localStorage.removeItem('jwt')
+      meStore.$reset()
       router.push('/sign_in')
     }
-    onMounted(async () => {
-      const response = await meStore.mePromise!.catch(() => undefined)
-      me.value = response?.data.resource
+    onMounted(() => {
+      meStore.mePromise!.then(
+        (res) => {
+          me.value = res?.data.resource
+        },
+        () => {
+          throw new Error('未登录')
+        }
+      )
     })
     return () => (
       <div>
