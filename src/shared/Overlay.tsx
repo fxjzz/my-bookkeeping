@@ -1,9 +1,16 @@
-import { defineComponent, onMounted, PropType, ref } from 'vue'
+import { defineComponent, onMounted, PropType, ref, watch } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { Icon } from './Icon'
 import s from './Overlay.module.scss'
 import { useMeStore } from '../stores/useMeStore'
 import { Dialog } from 'vant'
+
+const list = [
+  { name: '记一笔账', to: '/items/create', icon: 'money' },
+  { name: '记账总览', to: '/items', icon: 'total' },
+  { name: '统计图表', to: '/statistics', icon: 'chart' },
+  { name: '导出数据', to: '/export', icon: 'export' }
+]
 
 export const Overlay = defineComponent({
   props: {
@@ -40,6 +47,7 @@ export const Overlay = defineComponent({
           throw new Error('未登录')
         }
       )
+      console.log(route.fullPath)
     })
     return () => (
       <div>
@@ -62,30 +70,12 @@ export const Overlay = defineComponent({
           </section>
           <nav>
             <ul class={s.action_list}>
-              <li>
-                <RouterLink to="/items" class={s.action}>
-                  <Icon name="total" class={s.icon} />
-                  <span>记账总览</span>
+              {list.map((l) => (
+                <RouterLink to={l.to} class={[s.action, route.fullPath === l.to ? s.selected : '']}>
+                  <Icon name={l.icon} class={s.icon} />
+                  <span>{l.name}</span>
                 </RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/statistics" class={s.action}>
-                  <Icon name="chart" class={s.icon} />
-                  <span>统计图表</span>
-                </RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/export" class={s.action}>
-                  <Icon name="export" class={s.icon} />
-                  <span>导出数据</span>
-                </RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/notify" class={s.action}>
-                  <Icon name="notify" class={s.icon} />
-                  <span>记账提醒</span>
-                </RouterLink>
-              </li>
+              ))}
             </ul>
           </nav>
         </div>
