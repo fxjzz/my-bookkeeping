@@ -8,6 +8,7 @@ import { Tab, Tabs } from '../shared/Tabs'
 import { Time } from '../shared/time'
 import s from './TimeTabsLayout.module.scss'
 import { MainLayout } from './MainLayout'
+import { useItemStore } from '../stores/useItemStore'
 const demo = defineComponent({
   props: {
     startDate: {
@@ -30,6 +31,7 @@ export const TimeTabsLayout = defineComponent({
     }
   },
   setup: (props, context) => {
+    const itemsStore = useItemStore()
     const overlayVisible = ref(false)
     const onClickMenu = () => {
       document.documentElement.scrollTop = 0
@@ -67,6 +69,7 @@ export const TimeTabsLayout = defineComponent({
       e.preventDefault()
       toggleVisible()
       Object.assign(customTime, tempTime)
+      itemsStore.fetchItems(customTime.start, customTime.end)
     }
     const onSelect = (value: string) => {
       if (value === '自定义时间') {
