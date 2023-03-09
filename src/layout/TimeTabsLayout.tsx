@@ -60,14 +60,17 @@ export const TimeTabsLayout = defineComponent({
       }
     ]
     const refOverlayVisible = ref(false)
+    const toggleVisible = () => {
+      refOverlayVisible.value = !refOverlayVisible.value
+    }
     const onSubmitCustomTime = (e: Event) => {
       e.preventDefault()
-      refOverlayVisible.value = false
+      toggleVisible()
       Object.assign(customTime, tempTime)
     }
     const onSelect = (value: string) => {
       if (value === '自定义时间') {
-        refOverlayVisible.value = true
+        toggleVisible()
       }
     }
     return () => (
@@ -101,7 +104,9 @@ export const TimeTabsLayout = defineComponent({
                       <FormItem label="结束时间" v-model={tempTime.end} type="date" />
                       <FormItem>
                         <div class={s.actions}>
-                          <button type="button">取消</button>
+                          <button type="button" onClick={toggleVisible}>
+                            取消
+                          </button>
                           <button type="submit">确认</button>
                         </div>
                       </FormItem>
