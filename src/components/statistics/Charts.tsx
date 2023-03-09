@@ -39,7 +39,10 @@ export const Charts = defineComponent({
         const time = new Time(props.startDate + 'T00:00:00.000+0800').add(i, 'day').getTimestamp() //每一天
         //原数组存在日期，则替换
         const item = originalData.value[0]
-        const amount = item && new Date(item.happen_at).getTime() === time ? originalData.value.shift()!.amount : 0
+        const amount =
+          item && new Date(item.happen_at + 'T00:00:00.000+0800').getTime() === time
+            ? originalData.value.shift()!.amount
+            : 0
         return [new Date(time).toISOString(), amount]
       })
     })
