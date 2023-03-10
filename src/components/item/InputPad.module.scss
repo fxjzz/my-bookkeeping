@@ -38,6 +38,10 @@
   background: var(--button-border-color);
   border-top: 1px solid var(--button-border-color);
   > button {
+    &:active {
+      background: #8f4cd7;
+      transition: background-color 0.5s ease;
+    }
     border: none;
     background: white;
     &:nth-child(1) {
