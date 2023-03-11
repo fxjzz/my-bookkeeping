@@ -146,11 +146,9 @@ export const FormItem = defineComponent({
           <label class={s.formLabel}>
             {props.label && <span class={s.formItem_name}>{props.label}</span>}
             <div class={s.formItem_value}>{content.value}</div>
-            {props.error && (
-              <div class={s.formItem_errorHint}>
-                <span>{props.error ? getFriendlyError(props.error) : '　'}</span>
-              </div>
-            )}
+            <div class={s.formItem_errorHint}>
+              <span>{props.error ? getFriendlyError(props.error) : '　'}</span>
+            </div>
           </label>
         </div>
       )

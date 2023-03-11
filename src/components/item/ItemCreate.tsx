@@ -28,7 +28,7 @@ export const ItemCreate = defineComponent({
     const onError = (error: AxiosError<ResourceError>) => {
       if (error.response?.status === 422) {
         Dialog.alert({
-          title: '出错',
+          title: '出错了',
           message: Object.values(error.response.data.errors).join('\n')
         })
       }

@@ -6,6 +6,7 @@
   font-size: 18px;
   border-radius: var(--button-radius);
   height: var(--button-height);
+  box-shadow: rgba(138, 74, 213, 0.35) 0px 5px 15px;
   &[disabled] {
     opacity: 0.5;
     cursor: not-allowed;
