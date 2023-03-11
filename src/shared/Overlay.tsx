@@ -47,7 +47,6 @@ export const Overlay = defineComponent({
           throw new Error('未登录')
         }
       )
-      console.log(route.fullPath)
     })
     return () => (
       <div>

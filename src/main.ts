@@ -1,4 +1,5 @@
 import { createPinia } from 'pinia'
+import { VueQueryPlugin } from 'vue-query'
 import { useMeStore } from './stores/useMeStore'
 import { createApp } from 'vue'
 import { App } from './App'
@@ -13,6 +14,7 @@ const app = createApp(App)
 
 app.use(router)
 app.use(pinia)
+app.use(VueQueryPlugin)
 app.mount('#app')
 
 const meStore = useMeStore()

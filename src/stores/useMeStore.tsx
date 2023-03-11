@@ -3,7 +3,6 @@ import { defineStore } from 'pinia'
 import { http } from '../shared/Http'
 
 type MeState = {
-  me?: User
   mePromise?: Promise<AxiosResponse<Resource<User>>>
 }
 
@@ -14,7 +13,6 @@ type MeActions = {
 
 export const useMeStore = defineStore<string, MeState, {}, MeActions>('me', {
   state: () => ({
-    me: undefined,
     mePromise: undefined
   }),
   actions: {
