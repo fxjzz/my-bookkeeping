@@ -1,4 +1,4 @@
-import { Overlay as VOverlay } from 'vant'
+import { Dialog, Overlay as VOverlay, Toast } from 'vant'
 import { defineComponent, PropType, reactive, ref, Transition } from 'vue'
 import { ItemSummary } from '../components/item/ItemSummary'
 import { Form, FormItem } from '../shared/Form'
@@ -65,9 +65,21 @@ export const TimeTabsLayout = defineComponent({
     const toggleVisible = () => {
       refOverlayVisible.value = !refOverlayVisible.value
     }
+    const compareTime = (start: string, end: string) => {
+      const diff = (new Date(end).getTime() - new Date(start).getTime()) / (24 * 3600 * 1000)
+      if (diff > 31) {
+        Dialog({
+          title: '时间过长',
+          message: '请选择小于31天',
+          theme: 'round-button'
+        })
+        throw new Error('')
+      }
+    }
     const onSubmitCustomTime = (e: Event) => {
       e.preventDefault()
       toggleVisible()
+      compareTime(tempTime.start, tempTime.end)
       Object.assign(customTime, tempTime)
       itemsStore.fetchItems(customTime.start, customTime.end)
     }

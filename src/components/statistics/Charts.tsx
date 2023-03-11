@@ -1,4 +1,4 @@
-import { computed, defineComponent, onMounted, PropType, ref, watch } from 'vue'
+import { computed, defineComponent, onMounted, onUpdated, PropType, ref, watch } from 'vue'
 import { FormItem } from '../../shared/Form'
 import s from './Charts.module.scss'
 import { Bars } from './Bars'
@@ -94,6 +94,13 @@ export const Charts = defineComponent({
     }
     onMounted(fetchData1)
     onMounted(fetchData2)
+    watch(
+      () => props.startDate,
+      () => {
+        fetchData1()
+        fetchData2()
+      }
+    )
     watch(
       () => kind.value,
       () => {
