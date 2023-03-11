@@ -102,6 +102,7 @@ export const SignInPage = defineComponent({
                   placeholder="请输入邮箱，然后点击发送验证码"
                   v-model={formData.email}
                   error={errors.email?.[0]}
+                  errCon={true}
                 />
                 <FormItem
                   ref={refValidationCode}
@@ -112,6 +113,7 @@ export const SignInPage = defineComponent({
                   onClick={onClickSendValidationCode}
                   v-model={formData.code}
                   error={errors.code?.[0]}
+                  errCon={true}
                 />
                 <FormItem style={{ paddingTop: '96px' }}>
                   <Button type="submit">登录</Button>
