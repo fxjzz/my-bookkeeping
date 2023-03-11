@@ -10,10 +10,11 @@ import { Icon } from '../shared/Icon'
 import { hasError, validate } from '../shared/validate'
 import s from './SignInPage.module.scss'
 import { useMeStore } from '../stores/useMeStore'
+import useUser from '../useQuery/useUser'
 
 export const SignInPage = defineComponent({
   setup: (props, context) => {
-    const meStore = useMeStore()
+    const { refetch } = useUser()
     const router = useRouter()
     const route = useRoute()
     const formData = reactive({
@@ -50,7 +51,7 @@ export const SignInPage = defineComponent({
         localStorage.setItem('jwt', response.data.jwt)
         // router.push('/sign_in?return_to='+ encodeURIComponent(route.fullPath))
         const returnTo = route.query.return_to?.toString()
-        meStore.refreshMe()
+        refetch.value()
         router.push(returnTo || '/')
       }
     }

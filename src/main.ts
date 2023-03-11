@@ -1,6 +1,5 @@
 import { createPinia } from 'pinia'
 import { VueQueryPlugin } from 'vue-query'
-import { useMeStore } from './stores/useMeStore'
 import { createApp } from 'vue'
 import { App } from './App'
 import { createRouter } from 'vue-router'
@@ -16,23 +15,3 @@ app.use(router)
 app.use(pinia)
 app.use(VueQueryPlugin)
 app.mount('#app')
-
-const meStore = useMeStore()
-meStore.fetchMe()
-console.log(meStore.fetchMe)
-
-router.beforeEach((to, from) => {
-  if (
-    to.path === '/' ||
-    to.path.startsWith('/welcome') ||
-    to.path.startsWith('/sign_in') ||
-    to.path.startsWith('/start')
-  ) {
-    return true
-  } else {
-    return meStore.mePromise!.then(
-      () => true,
-      () => '/sign_in?return_to=' + from.path
-    )
-  }
-})

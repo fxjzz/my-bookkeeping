@@ -2,8 +2,8 @@ import { defineComponent, onMounted, PropType, ref, watch } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { Icon } from './Icon'
 import s from './Overlay.module.scss'
-import { useMeStore } from '../stores/useMeStore'
 import { Dialog } from 'vant'
+import useUser from '../useQuery/useUser'
 
 const list = [
   { name: '记一笔账', to: '/items/create', icon: 'money' },
@@ -19,13 +19,13 @@ export const Overlay = defineComponent({
     }
   },
   setup: (props, context) => {
-    const meStore = useMeStore()
+    const { isSuccess, data, remove } = useUser()
     const close = () => {
       props.onClose?.()
     }
+    const me = ref<User>()
     const route = useRoute()
     const router = useRouter()
-    const me = ref<User>()
     const userName = (name: string) => {
       return name.slice(0, name.indexOf('@'))
     }
@@ -35,18 +35,11 @@ export const Overlay = defineComponent({
         message: '是否退出登录？'
       })
       localStorage.removeItem('jwt')
-      meStore.$reset()
+      remove.value()
       router.push('/sign_in')
     }
     onMounted(() => {
-      meStore.mePromise!.then(
-        (res) => {
-          me.value = res?.data.resource
-        },
-        () => {
-          throw new Error('未登录')
-        }
-      )
+      me.value = data.value
     })
     return () => (
       <div>
@@ -55,7 +48,10 @@ export const Overlay = defineComponent({
           <section class={s.currentUser}>
             {me.value ? (
               <div>
-                <h2>您好！{userName(me.value.email)}</h2>
+                <h2>
+                  您好！
+                  {userName(me.value.email)}
+                </h2>
                 <p onClick={onSignOut} class={s.p}>
                   登出
                   <Icon name="out" class={s.out} />
