@@ -11,9 +11,6 @@ import s from './StartPage.module.scss'
 export const StartPage = defineComponent({
   setup: (props, context) => {
     const overlayVisible = ref(false)
-    const onClick = () => {
-      console.log('hi')
-    }
     const onClickMenu = () => {
       overlayVisible.value = !overlayVisible.value
     }
@@ -29,9 +26,7 @@ export const StartPage = defineComponent({
               </Center>
               <div class={s.button_wrapper}>
                 <RouterLink to="/items/create">
-                  <Button class={s.button} onClick={onClick}>
-                    开始记账
-                  </Button>
+                  <Button class={s.button}>开始记账</Button>
                 </RouterLink>
               </div>
               <RouterLink to="/items/create">

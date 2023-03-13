@@ -17,7 +17,6 @@ app.mount('#app')
 
 const meStore = useMeStore()
 meStore.fetchMe()
-console.log(meStore.fetchMe)
 
 router.beforeEach((to, from) => {
   if (
