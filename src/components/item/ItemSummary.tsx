@@ -9,6 +9,7 @@ import s from './ItemSummary.module.scss'
 import p from '@images/picture.png'
 import { useAfterMe } from '../../hooks/useAfterMe'
 import { useItemStore } from '../../stores/useItemStore'
+import { Time } from '../../shared/time'
 
 export const ItemSummary = defineComponent({
   props: {
@@ -22,12 +23,13 @@ export const ItemSummary = defineComponent({
   setup: (props, context) => {
     const itemStore = useItemStore(props.startDate, props.endDate)
     const fetchItemsBalance = async () => {
+      const end = new Time(props.endDate).add(1, 'day').format()
       if (!props.startDate || !props.endDate) return
       const response = await http.get(
         '/items/balance',
         {
           happen_after: props.startDate,
-          happen_before: props.endDate,
+          happen_before: end,
           page: itemStore.page + 1
         },
         {
@@ -48,7 +50,7 @@ export const ItemSummary = defineComponent({
       () => [props.startDate, props.endDate],
       () => {
         itemStore.$reset()
-        itemStore.fetchItems()
+        itemStore.fetchItems(props.startDate, props.endDate)
         Object.assign(itemsBalance, {
           expenses: 0,
           income: 0,
